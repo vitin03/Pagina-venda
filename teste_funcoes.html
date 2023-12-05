@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="../App/css/style.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+        crossorigin="anonymous"></script>
+    <script src="../js/jquery-3.6.1.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"
+        integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript" src="https://assets.moip.com.br/v2/bank-account-validator.min.js"></script>
+    <script src="../js/script_validar.js"></script>
+    <script type="text/javascript">
+
+        //valida e verifica conta bancaria
+        $(document).ready(function () {
+            let numero_banco = $("#numero_banco");
+            let numero_agencia = $("#numero_agencia");
+            let digito_numero_agencia = $("#digito_numero_agencia");
+            let numero_conta = $("#numero_conta");
+            let digito_numero_conta = $("#digito_numero_conta");
+            $(document).on('input', '#numero_agencia', function () {
+                $(this).removeClass('is-invalid');
+            })
+            $(document).on('input', '#digito_numero_agencia', function () {
+                $(this).removeClass('is-invalid');
+            })
+            $(document).on('input', '#numero_conta', function () {
+                $(this).removeClass('is-invalid');
+            })
+            $(document).on('input', '#digito_numero_conta', function () {
+                $(this).removeClass('is-invalid');
+            })
+
+            $(document).on('click', '#validate_bank_account', function () {
+                Moip.BankAccount.validate({
+                    bankNumber: numero_banco.val(),
+                    agencyNumber: numero_agencia.val(),
+                    agencyCheckNumber: digito_numero_agencia.val(),
+                    accountNumber: numero_conta.val(),
+                    accountCheckNumber: digito_numero_conta.val(),
+                    valid: function () {
+                        numero_agencia.addClass('is-valid');
+                        digito_numero_agencia.addClass('is-valid')
+                        numero_conta.addClass('is-valid')
+                        digito_numero_conta.addClass('is-valid')
+                    },
+                    invalid: function (data) {
+                        var errors = "Conta bancária inválida: \n";
+                        for (i in data.errors) {
+                            errors += data.errors[i].description + "-" + data.errors[i].code + ")\n";
+                            if (data.errors[i].code === 'INVALID_AGENCY_NUMBER') {
+                                $(this).removeClass('is-valid');
+                                numero_agencia.addClass('is-invalid');
+                            }
+                            if (data.errors[i].code === 'INVALID_AGENCY_CHECK_NUMBER' ||
+                                data.errors[i].code === 'AGENCY_CHECK_NUMBER_DONT_MATCH') {
+                                $(this).removeClass('is-valid');
+                                digito_numero_agencia.addClass('is-invalid');
+                            }
+                            if (data.errors[i].code === 'INVALID_ACCOUNT_NUMBER') {
+                                $(this).removeClass('is-valid');
+                                numero_conta.addClass('is-invalid');
+                            }
+                            if (data.errors[i].code === 'INVALID_ACCOUNT_CHECK_NUMBER' ||
+                                data.errors[i].code === 'ACCOUNT_CHECK_NUMBER_DONT_MATCH') {
+                                $(this).removeClass('is-valid');
+                                digito_numero_conta.addClass('is-invalid');
+                            }
+                        }
+                        alert(errors);
+                    }
+                });
+            });
+        });
+        //ocultar e exibir card no canto da tela
+        $(document).ready(function () {
+            $(document).on('click', '.card_head', function () {
+                let campo_icone = $(this).find('.icone_seta');
+                if (campo_icone.text() == 'arrow_drop_down') {
+                    campo_icone.text("arrow_drop_up");
+                    return;
+                }
+                campo_icone.text("arrow_drop_down");
+            })
+        })
+
+        //valida cpf
+        function ValidaCPF(cpf) {
+            valor_cpf = cpf.replace(/[^0-9]/g, '')
+            if (valor_cpf.length < 11 && valor_cpf.length > 0) {
+                return false;
+            }
+            if (valor_cpf == '') {
+                return false;
+            }
+            if (valor_cpf.length == 11) {
+                var v = [];
+                v[0] = 1 * valor_cpf[0] + 2 * valor_cpf[1] + 3 * valor_cpf[2];
+                v[0] += 4 * valor_cpf[3] + 5 * valor_cpf[4] + 6 * valor_cpf[5];
+                v[0] += 7 * valor_cpf[6] + 8 * valor_cpf[7] + 9 * valor_cpf[8];
+                v[0] = v[0] % 11;
+                v[0] = v[0] % 10;
+                v[1] = 1 * valor_cpf[1] + 2 * valor_cpf[2] + 3 * valor_cpf[3];
+                v[1] += 4 * valor_cpf[4] + 5 * valor_cpf[5] + 6 * valor_cpf[6];
+                v[1] += 7 * valor_cpf[7] + 8 * valor_cpf[8] + 9 * v[0];
+                v[1] = v[1] % 11;
+                v[1] = v[1] % 10;
+                if ((v[0] != valor_cpf[9]) || (v[1] != valor_cpf[10]) || valor_cpf == "11111111111" || valor_cpf == "22222222222" || valor_cpf == "33333333333" ||
+                    valor_cpf == "44444444444" || valor_cpf == "55555555555" || valor_cpf == "66666666666" || valor_cpf == "77777777777" || valor_cpf == "88888888888" || valor_cpf ==
+                    "99999999999" || valor_cpf == "00000000000") {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+
+        //valida cnpj
+        function validaCNPJ(cnpj) {
+            valor_cnpj = cnpj.replace(/[^\d]+/g, '');
+            if (valor_cnpj == '') {
+                return false;
+            }
+            if (valor_cnpj.length < 14 && valor_cnpj.length > 0) {
+                return false;
+            }
+            if (valor_cnpj == "00000000000000" || valor_cnpj == "11111111111111" || valor_cnpj == "22222222222222" || valor_cnpj == "33333333333333" ||
+                valor_cnpj == "44444444444444" || valor_cnpj == "55555555555555" || valor_cnpj == "66666666666666" || valor_cnpj == "77777777777777" ||
+                valor_cnpj == "88888888888888" || valor_cnpj == "99999999999999") {
+                return false;
+            }
+            tamanho = valor_cnpj.length - 2
+            numeros = valor_cnpj.substring(0, tamanho);
+            digitos = valor_cnpj.substring(tamanho);
+            soma = 0;
+            pos = tamanho - 7;
+            for (i = tamanho; i >= 1; i--) {
+                soma += numeros.charAt(tamanho - i) * pos--;
+                if (pos < 2)
+                    pos = 9;
+            }
+            resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+            if (resultado != digitos.charAt(0)) {
+                return false;
+            }
+            tamanho = tamanho + 1;
+            numeros = valor_cnpj.substring(0, tamanho);
+            soma = 0;
+            pos = tamanho - 7;
+            for (i = tamanho; i >= 1; i--) {
+                soma += numeros.charAt(tamanho - i) * pos--;
+                if (pos < 2) { pos = 9 };
+            }
+            resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+            if (resultado != digitos.charAt(1)) {
+                return false;
+            }
+            return true;
+        }
+
+        //verificador de cpf e cnpj no mesmo campo
+        $(document).ready(function () {
+            let campo_cpfcnpj = $('.cpfcnpj');
+            campo_cpfcnpj.mask("999.999.999-99");
+            var options = {
+                onKeyPress: function (cpfcnpj, e, field, options) {
+                    var masks = ['000.000.000-000', '00.000.000/0000-00'];
+                    var mask = (cpfcnpj.length > 14) ? masks[1] : masks[0];
+                    campo_cpfcnpj.mask(mask, options);
+                }
+            };
+            campo_cpfcnpj.mask('000.000.000-000', options);
+            $(document).on('input', '.cpfcnpj', function () {
+                let valor = $('.cpfcnpj').val();
+                if (valor.length > 14) {
+                    if (validaCNPJ(valor)) {
+                        campo_cpfcnpj.removeClass('is-invalid')
+                        campo_cpfcnpj.addClass('is-valid')
+
+                    } else {
+                        campo_cpfcnpj.removeClass('is-valid')
+                        campo_cpfcnpj.addClass('is-invalid')
+                    }
+                }
+                if (valor.length <= 14) {
+                    if (ValidaCPF(valor)) {
+                        campo_cpfcnpj.removeClass('is-invalid')
+                        campo_cpfcnpj.addClass('is-valid')
+                    } else {
+                        campo_cpfcnpj.removeClass('is-valid')
+                        campo_cpfcnpj.addClass('is-invalid')
+                    }
+                }
+            })
+        })
+
+        //verificador de cpf (campo individual)
+        $(document).ready(function () {
+            let campo_cpf = $('.campo_cpf');
+            let campo_cnpj = $('.campo_cnpj');
+            $(document).on('input', '.campo_cpf', function () {
+                campo_cpf.mask("000.000.000-00")
+                if (ValidaCPF(campo_cpf.val())) {
+                    campo_cpf.removeClass('is-invalid')
+                    campo_cpf.addClass('is-valid')
+                } else {
+                    campo_cpf.removeClass('is-valid')
+                    campo_cpf.addClass('is-invalid')
+                }
+            })
+            //verificador de cnpj (campo individual)
+            $(document).on('input', '.campo_cnpj', function () {
+                campo_cnpj.mask("00.000.000/0000-00")
+                if (validaCNPJ(campo_cnpj.val())) {
+                    campo_cnpj.removeClass('is-invalid')
+                    campo_cnpj.addClass('is-valid')
+                } else {
+                    campo_cnpj.removeClass('is-valid')
+                    campo_cnpj.addClass('is-invalid')
+                }
+            })
+
+            $(document).on('input', '.campo_zero_esquerda', function () {
+                var inputValue = $(this).val();
+                var inputLength = inputValue.length;
+                var maxLength = $(this).attr('maxlength');
+                var zeroPad = '';
+                for (var i = 0; i < (maxLength - inputLength); i++) {
+                    zeroPad += '0';
+                }
+                var lastValue = inputValue.slice(-1);
+                if (lastValue >= '0' && lastValue <= '9') {
+                    $(this).val(zeroPad + lastValue);
+                } else {
+                    $(this).val(inputValue.slice(0, -1));
+                }
+            });
+
+        })
+
+        //valida cep
+        function ValidaCep(cep) {
+            const pattern = /^[0-9]{5}-[0-9]{3}$/;
+            return pattern.test(cep)
+        }
+
+        //API de cep e verificador de cep
+        $(document).ready(function () {
+            $(document).on('input', "[name = 'cep']", function () {
+                var campo_cep = $(this);
+                campo_cep.mask("99999-999");
+                var cep = $(this).val()
+                var este = $(this).parent().parent().parent();
+                if (ValidaCep()) {
+                    este.find("[name = 'cep']").removeClass('is-invalid');
+                    este.find("[name = 'cep']").addClass('is-valid');
+                } else {
+                    este.find("[name = 'cep']").removeClass('is-valid');
+                    este.find("[name = 'cep']").addClass('is-invalid');
+                }
+                $.ajax({
+                    url: 'https://viacep.com.br/ws/' + cep + '/json/',
+                    dataType: 'json',
+                    success: function (resposta) {
+                        este.find('[name="logradouro"]').val(resposta.logradouro);
+                        este.find('[name="complemento"]').val(resposta.complemento);
+                        este.find('[name="bairro"]').val(resposta.bairro);
+                        este.find('[name="cidade"]').val(resposta.localidade);
+                        este.find('[name="uf"]').val(resposta.uf);
+                        if (resposta.bairro == undefined) {
+                            este.find("[name = 'cep']").removeClass('is-valid');
+                            este.find("[name = 'cep']").addClass('is-invalid');
+                        } else {
+                            este.find('[name="numero"]').focus();
+                            este.find("[name = 'cep']").addClass('is-valid');
+                            este.find("[name = 'cep']").removeClass('is-invalid');
+                        }
+                    }
+                });
+            })
+        });
+
+        //função de exibir caracter a esquerda
+        function CaracterEsquerda(valor, tamanho = 5, caracter = '0') {
+            let conjunto_caracteres = '';
+            if (tamanho == 1) {
+                return;
+            }
+            for (let index = 0; index < tamanho - 1; index++) {
+                conjunto_caracteres = conjunto_caracteres + caracter;
+            }
+            valor = (conjunto_caracteres + valor).slice(-(tamanho))
+            return valor;
+        }
+
+        //exbir caracter na esquerda
+        $(document).ready(function () {
+            $(document).on('input', '.campo_zero_esquerda', function () {
+                let campo = $(this);
+                let tamanho = $(this).attr('data-tamanho');
+                let caracter = $(this).attr('data-caracter');
+                campo.val(CaracterEsquerda(campo.val()));
+            })
+        })
+
+        //valida pis
+        function validarPIS(pis) {
+            var multiplicadorBase = "3298765432";
+            var total = 0;
+            var resto = 0;
+            var multiplicando = 0;
+            var multiplicador = 0;
+            var digito = 99;
+            var numeroPIS = pis.replace(/[^\d]+/g, '');
+            if (numeroPIS.length !== 11 ||
+                numeroPIS === "00000000000" ||
+                numeroPIS === "11111111111" ||
+                numeroPIS === "22222222222" ||
+                numeroPIS === "33333333333" ||
+                numeroPIS === "44444444444" ||
+                numeroPIS === "55555555555" ||
+                numeroPIS === "66666666666" ||
+                numeroPIS === "77777777777" ||
+                numeroPIS === "88888888888" ||
+                numeroPIS === "99999999999") {
+                return false;
+            } else {
+                for (var i = 0; i < 10; i++) {
+                    multiplicando = parseInt(numeroPIS.substring(i, i + 1));
+                    multiplicador = parseInt(multiplicadorBase.substring(i, i + 1));
+                    total += multiplicando * multiplicador;
+                }
+                resto = 11 - total % 11;
+                resto = resto === 10 || resto === 11 ? 0 : resto;
+                digito = parseInt("" + numeroPIS.charAt(10));
+                return resto === digito;
+            }
+        }
+
+        //verificador de pis
+        $(document).ready(function () {
+            $(document).on('input', '.cod_pis', function () {
+                let campo_pis = $(this);
+                campo_pis.mask("000.00000.00-0")
+                if (validarPIS(campo_pis.val())) {
+                    campo_pis.removeClass('is-invalid')
+                    campo_pis.addClass('is-valid')
+                } else {
+                    campo_pis.removeClass('is-valid')
+                    campo_pis.addClass('is-invalid')
+                }
+            })
+        })
+
+        //valida CNH
+        function validaCNH(cnh) {
+            var char1 = cnh.charAt(0);
+            if (cnh.replace(/[^\d]/g, '').length !== 11 || char1.repeat(11) === cnh) {
+                return false;
+            }
+            for (var i = 0, j = 9, v = 0; i < 9; ++i, --j) {
+                v += +(cnh.charAt(i) * j);
+            }
+            var dsc = 0,
+                vl1 = v % 11;
+            if (vl1 >= 10) {
+                vl1 = 0;
+                dsc = 2;
+            }
+            for (i = 0, j = 1, v = 0; i < 9; ++i, ++j) {
+                v += +(cnh.charAt(i) * j);
+            }
+            var x = v % 11;
+            var vl2 = (x >= 10) ? 0 : x - dsc;
+            return ('' + vl1 + vl2) === cnh.substr(-2);
+        }
+
+        //verificador de CNH
+        $(document).ready(function () {
+            $(document).on('input', '.cod_cnh', function () {
+                let campo_cnh = $(this);
+                campo_cnh.mask("00000000000")
+                if (validaCNH(campo_cnh.val())) {
+                    campo_cnh.removeClass('is-invalid')
+                    campo_cnh.addClass('is-valid')
+                } else {
+                    campo_cnh.removeClass('is-valid')
+                    campo_cnh.addClass('is-invalid')
+                }
+            })
+        })
+
+        //valida email
+        function validaEmail(email) {
+            var re = /\S+@\S+\.\S+/;
+            return re.test(email);
+        }
+
+        //verificador de email
+        $(document).ready(function () {
+            $(document).on('input', '.end_email', function () {
+                let campo_email = $(this);
+                if (validaEmail(campo_email.val())) {
+                    campo_email.removeClass('is-invalid')
+                    campo_email.addClass('is-valid')
+                } else {
+                    campo_email.removeClass('is-valid')
+                    campo_email.addClass('is-invalid')
+                }
+            })
+        })
+
+        //valida nome completo
+        function validaNomeSobrenome(NomeSobrenome_campo) {
+            let re = /\b[A-Za-zÀ-ú][A-Za-zÀ-ú]+,?\s[A-Za-zÀ-ú][A-Za-zÀ-ú]{2,19}\b/gi;
+            return re.test(NomeSobrenome_campo);
+        }
+
+        //verificador de nome completo
+        $(document).ready(function () {
+            $(document).on('input', '.nome_sobrenome', function () {
+                let campo_nome_sobrenome = $(this);
+                if (validaNomeSobrenome(campo_nome_sobrenome.val())) {
+                    campo_nome_sobrenome.removeClass('is-invalid')
+                    campo_nome_sobrenome.addClass('is-valid')
+                } else {
+                    campo_nome_sobrenome.removeClass('is-valid')
+                    campo_nome_sobrenome.addClass('is-invalid')
+                }
+            })
+        })
+
+        //verificador de nome de titular do cartão
+        $(document).ready(function () {
+            $(document).on('input', '.nome_titular', function () {
+
+                let nome_titular = $(this);
+                if (validaNomeSobrenome(nome_titular.val())) {
+                    nome_titular.removeClass('is-invalid')
+                    nome_titular.addClass('is-valid')
+                } else {
+                    nome_titular.removeClass('is-valid')
+                    nome_titular.addClass('is-invalid')
+                }
+            })
+        })
+
+        //valida logradouro
+        function validaLogradouro(Logradouro) {
+            let re = new RegExp("^(RUA|Rua|R.|AVENIDA|Avenida|AV|TRAVESSA|Travessa|TRAV.|Trav.) ([a-zA-Z_\s]+)");
+            return re.test(Logradouro);
+        }
+
+        //verificador de logradouro
+        $(document).ready(function () {
+            $(document).on('input', '.logradouro', function () {
+                let campo_logradouro = $(this);
+                if (validaLogradouro(campo_logradouro.val())) {
+                    campo_logradouro.removeClass('is-invalid')
+                    campo_logradouro.addClass('is-valid')
+                } else {
+                    campo_logradouro.removeClass('is-valid')
+                    campo_logradouro.addClass('is-invalid')
+                }
+            })
+        })
+
+        //valida telefone
+        function validaTelefone(telefone) {
+            telefone = telefone.replace(/\D/g, '');
+            console.log(telefone);
+            if (!(telefone.length >= 10 && telefone.length <= 11)) return false;
+            if (telefone.length == 11 && parseInt(telefone.substring(2, 3)) != 9) return false;
+            for (var n = 0; n < 10; n++) {
+                if (telefone == new Array(11).join(n) || telefone == new Array(12).join(n)) return false;
+            }
+            let cont = 0;
+
+            var codigosDDD = [11, 12, 13, 14, 15, 16, 17, 18, 19,
+                21, 22, 24, 27, 28, 31, 32, 33, 34,
+                35, 37, 38, 41, 42, 43, 44, 45, 46,
+                47, 48, 49, 51, 53, 54, 55, 61, 62,
+                64, 63, 65, 66, 67, 68, 69, 71, 73,
+                74, 75, 77, 79, 81, 82, 83, 84, 85,
+                86, 87, 88, 89, 91, 92, 93, 94, 95,
+                96, 97, 98, 99];
+            if (codigosDDD.indexOf(parseInt(telefone.substring(0, 2))) == -1) return false;
+            if (new Date().getFullYear() < 2017) return true;
+            if (telefone.length == 10 && [2, 3, 4, 5, 7].indexOf(parseInt(telefone.substring(2, 3))) == -1) return false;
+            return true;
+        }
+
+        // verificador de telefone 
+        $(document).ready(function () {
+            let campo_telefone = $('.telefone');
+            campo_telefone.mask('(00) 0000-00009')
+            var options = {
+                onKeyPress: function (telefone, e, field, options) {
+                    var masks = ['(00) 00000-0000', '(00) 0000-00009'];
+                    var mask = (telefone.length > 14) ? masks[0] : masks[1];
+                    campo_telefone.mask(mask, options);
+                }
+            };
+            campo_telefone.mask('(00) 0000-00000', options);
+            $(document).on('input', '.telefone', function () {
+                if (validaTelefone(campo_telefone.val())) {
+                    campo_telefone.removeClass('is-invalid')
+                    campo_telefone.addClass('is-valid')
+                } else {
+                    campo_telefone.removeClass('is-valid')
+                    campo_telefone.addClass('is-invalid')
+                }
+            })
+        })
+
+        //valida rg
+        function ValidaRG(rg) {
+            let col_1 = rg
+            let col_2 = '23456789'
+            let col_3 = [];
+            let soma = 0;
+            let m_soma;
+            let dig_ver;
+            for (let i = 0; i < 8; i++) {
+                col_3.push(Number(col_1[i]) * Number(col_2[i]))
+                soma = soma + col_3[i];
+            }
+            m_soma = soma % 11
+            dig_ver = 11 - m_soma
+            return dig_ver;
+        }
+
+        $(document).ready(function () {
+            let campo_rg = $('.campo_rg');
+            let valor_rg = campo_rg.val();
+            let digito_rg;
+            campo_rg.mask('00.000.000-0')
+            $(document).on('input', '.campo_rg', function () {
+                if (campo_rg.val().length == 10) {
+                    digito_rg = ValidaRG(campo_rg.val().replace(/[^\d]+/g, ''));
+                    if (digito_rg > 9) {
+                        campo_rg.removeClass('is-valid');
+                        campo_rg.addClass('is-invalid');
+                        return;
+                    }
+                } else if (campo_rg.val().length < 10 || campo_rg.val().length == 11) {
+                    campo_rg.removeClass('is-valid');
+                    campo_rg.addClass('is-invalid');
+                }
+                if (campo_rg.val().length == 12 && (campo_rg.val())[11] == digito_rg) {
+                    campo_rg.removeClass('is-invalid')
+                    campo_rg.addClass('is-valid')
+                } else if (campo_rg.val().length == 12 && (campo_rg.val())[11] != digito_rg) {
+                    campo_rg.removeClass('is-valid')
+                    campo_rg.addClass('is-invalid')
+                }
+            })
+        })
+        // valida cartão de crédito
+        function VerificarAlgoritimoLuhn(value) {
+            var value = value.replace(/\D/g, '');
+            var sum = 0;
+            var shouldDouble = false;
+            for (var i = value.length - 1; i >= 0; i--) {
+                var digit = parseInt(value.charAt(i));
+                if (shouldDouble) {
+                    if ((digit *= 2) > 9) digit -= 9;
+                }
+                sum += digit;
+                shouldDouble = !shouldDouble;
+            }
+            return (sum % 10) == 0;
+        }
+
+        var acceptedCreditCards = {
+            visa: /^4[0-9]{15}$/,
+            elo: /^4011(78|79)|^43(1274|8935)|^45(1416|7393|763(1|2))|^50(4175|6699|67[0-6][0-9]|677[0-8]|9[0-8][0-9]{2}|99[0-8][0-9]|999[0-9])|^627780|^63(6297|6368|6369)|^65(0(0(3([1-3]|[5-9])|4([0-9])|5[0-1])|4(0[5-9]|[1-3][0-9]|8[5-9]|9[0-9])|5([0-2][0-9]|3[0-8]|4[1-9]|[5-8][0-9]|9[0-8])|7(0[0-9]|1[0-8]|2[0-7])|9(0[1-9]|[1-6][0-9]|7[0-8]))|16(5[2-9]|[6-7][0-9])|50(0[0-9]|1[0-9]|2[1-9]|[3-4][0-9]|5[0-8]))/,
+            mastercard: /^((5(([1-2]|[4-5])[0-9]{8}|0((1|6)([0-9]{7}))|3(0(4((0|[2-9])[0-9]{5})|([0-3]|[5-9])[0-9]{6})|[1-9][0-9]{7})))|((508116)\\d{4,10})|((502121)\\d{4,10})|((589916)\\d{4,10})|(2[0-9]{15})|(67[0-9]{14})|(506387)\\d{4,10})/,
+            amex: /^3[47][0-9]{5,}$/,
+            discover: /^65[4-9][0-9]{13}|64[4-9][0-9]{13}|6011[0-9]{12}|(622(?:12[6-9]|1[3-9][0-9]|[2-8][0-9][0-9]|9[01][0-9]|92[0-5])[0-9]{10})$/,
+            diners_club: /3(?:0[0-5][0-9]{11}|[68][0-9]{12})/,
+            jcb: /(?:3[0-9]{15}|(2131|1800)[0-9]{11})/
+        };
+        function VerificarRegex(value) {
+            // remove all non digit characters
+            var value = value.replace(/\D/g, '');
+            var accepted = false;
+
+            Object.keys(acceptedCreditCards).forEach(function (key) {
+                var regex = acceptedCreditCards[key];
+                if (regex.test(value)) {
+                    accepted = true;
+                }
+            });
+            return accepted;
+        }
+
+        function validarCartao(value) {
+            var value = value.replace(/\D/g, '');
+            var sum = 0;
+            var shouldDouble = false;
+            if (VerificarAlgoritimoLuhn(value)) {
+                return true;
+            }
+
+            for (var i = value.length - 1; i >= 0; i--) {
+                var digit = parseInt(value.charAt(i));
+                if (shouldDouble) {
+                    if ((digit *= 2) > 9) digit -= 9;
+                }
+                sum += digit;
+                shouldDouble = !shouldDouble;
+            }
+
+            var valid = (sum % 10) == 0;
+            var accepted = false;
+
+            Object.keys(acceptedCreditCards).forEach(function (key) {
+                var regex = acceptedCreditCards[key];
+                if (regex.test(value)) {
+                    accepted = true;
+                }
+            });
+            return va.numerolid && accepted;
+        }
+
+        function validarCVV(creditCard, cvv) {
+            var creditCard = creditCard.replace(/\D/g, '');
+            var cvv = cvv.replace(/\D/g, '');
+            if (cvv.length == 3 || cvv.length == 4) {
+                return true;
+            }
+            return false;
+        }
+        //verifica numero, cvv e data do cartão.
+        $(document).ready(function () {
+            let campo_nome_titular = $('.nome_titular');
+            let campo_cartao = $('.numero_cartao');
+            let campo_mm = $('.numero_mm');
+            let campo_yy = $('.numero_yy');
+            $(document).on('input', '.tipo_cartao', function () {
+                let campo_cvv = $(this).parent().parent().find('.numero_cvv');
+                campo_cartao.removeClass('is-invalid')
+                campo_cartao.removeClass('is-valid')
+                campo_cvv.removeClass('is-invalid')
+                campo_cvv.removeClass('is-valid')
+                campo_cvv.mask("000")
+
+                if ($(this).val() === 'none') {
+                    campo_cartao.attr('pattern', '');
+                    campo_cartao.attr('disabled', true)
+                    campo_cvv.attr('disabled', true)
+                }
+
+                if ($(this).val() != 'none') {
+                    campo_cartao.removeAttr('disabled');
+                    campo_cvv.removeAttr('disabled');
+                    campo_mm.removeAttr('disabled');
+                    campo_yy.removeAttr('disabled');
+                    campo_nome_titular.removeAttr('disabled');
+                }
+                if ($(this).val() === 'mastercard') {
+                    campo_cartao.mask('0000 0000 0000 0000')
+                    campo_cartao.attr('pattern', '^((5(([1-2]|[4-5])[0-9]{8}|0((1|6)([0-9]{7}))|3(0(4((0|[2-9])[0-9]{5})|([0-3]|[5-9])[0-9]{6})|[1-9][0-9]{7})))|((508116)\\d{4,10})|((502121)\\d{4,10})|((589916)\\d{4,10})|(2[0-9]{15})|(67[0-9]{14})|(506387)\\d{4,10})')
+                }
+
+                if ($(this).val() === 'elo') {
+                    campo_cartao.mask('0000 0000 0000 0000')
+                    campo_cartao.attr('pattern', '^4011(78|79)|^43(1274|8935)|^45(1416|7393|763(1|2))|^50(4175|6699|67[0-6][0-9]|677[0-8]|9[0-8][0-9]{2}|99[0-8][0-9]|999[0-9])|^627780|^63(6297|6368|6369)|^65(0(0(3([1-3]|[5-9])|4([0-9])|5[0-1])|4(0[5-9]|[1-3][0-9]|8[5-9]|9[0-9])|5([0-2][0-9]|3[0-8]|4[1-9]|[5-8][0-9]|9[0-8])|7(0[0-9]|1[0-8]|2[0-7])|9(0[1-9]|[1-6][0-9]|7[0-8]))|16(5[2-9]|[6-7][0-9])|50(0[0-9]|1[0-9]|2[1-9]|[3-4][0-9]|5[0-8]))')
+                }
+                if ($(this).val() === 'american_express') {
+                    campo_cartao.mask('0000 000000 00000')
+                    campo_cartao.attr('pattern', '^3[47][0-9]{5,}$')
+                    campo_cvv.mask("0000")
+                }
+                if ($(this).val() === 'visa') {
+                    campo_cartao.mask('0000 0000 0000 0000')
+                    campo_cartao.attr('pattern', '^4[0-9]{15}$')
+                }
+                if ($(this).val() === 'discover') {
+                    campo_cartao.mask('0000 0000 0000 0000')
+                    campo_cartao.attr('pattern', '/^65[4-9][0-9]{13}|64[4-9][0-9]{13}|6011[0-9]{12}|(622(?:12[6-9]|1[3-9][0-9]|[2-8][0-9][0-9]|9[01][0-9]|92[0-5])[0-9]{10})$/')
+                }
+                if ($(this).val() === 'jcb') {
+                    campo_cartao.mask('0000 0000 0000 0000')
+                    campo_cartao.attr('pattern', '(?:3[0-9]{15}|(2131|1800)[0-9]{11})')
+                }
+
+                if ($(this).val() === 'diner_club') {
+                    campo_cartao.mask('0000 000000 0000')
+                    campo_cartao.attr('pattern', '3(?:0[0-5][0-9]{11}|[68][0-9]{12})')
+                }
+
+                if ($(this).val() === 'maestro') {
+                    campo_cartao.mask('0000 0000 0000 0000')
+                    campo_cartao.attr('pattern', '^(5018|5020|5038|5893|6304|6759|6761|6762|6763)[0-9]{8,15}$')
+                }
+            })
+            $(document).on('input', '.numero_cartao', function () {
+                let campo_numero_cartao = $(this);
+                let numero_cartao = $(this).val();
+                let re = new RegExp(campo_cartao.attr('pattern'));
+
+                if (validarCartao(numero_cartao) && VerificarAlgoritimoLuhn(numero_cartao) && VerificarRegex(numero_cartao) && re.test(numero_cartao.replace(/ /g, ""))) {
+                    campo_numero_cartao.removeClass('is-invalid')
+                    campo_numero_cartao.addClass('is-valid')
+                } else {
+                    campo_numero_cartao.removeClass('is-valid')
+                    campo_numero_cartao.addClass('is-invalid')
+                }
+            })
+            $(document).on('input', '.numero_cvv', function () {
+                let campo_tipo_cartao = $(this).parent().parent().find('.tipo_cartao')
+                let campo_cartao = $(this).parent().parent().find('.numero_cartao')
+                let campo_numero_cvv = $(this);
+                let numero_cvv = $(this).val();
+                if (validarCVV(campo_cartao.val(), numero_cvv)) {
+                    campo_numero_cvv.removeClass('is-invalid')
+                    campo_numero_cvv.addClass('is-valid')
+                } else {
+                    campo_numero_cvv.removeClass('is-valid')
+                    campo_numero_cvv.addClass('is-invalid')
+                }
+            })
+
+            $(document).on('input', '.numero_mm', function () {
+                let campo_numero_mm = $(this)
+                let re = new RegExp(campo_numero_mm.attr('pattern'))
+
+                if (re.test(campo_numero_mm.val())) {
+                    campo_numero_mm.removeClass('is-invalid')
+                    campo_numero_mm.addClass('is-valid')
+                } else {
+                    campo_numero_mm.removeClass('is-valid')
+                    campo_numero_mm.addClass('is-invalid')
+                }
+            })
+            $(document).on('input', '.numero_yy', function () {
+                let campo_numero_yy = $(this)
+                let re = new RegExp(campo_numero_yy.attr('pattern'));
+                if (re.test(campo_numero_yy.val())) {
+                    campo_numero_yy.removeClass('is-invalid')
+                    campo_numero_yy.addClass('is-valid')
+                } else {
+                    campo_numero_yy.removeClass('is-valid')
+                    campo_numero_yy.addClass('is-invalid')
+                }
+            })
+        })
+
+        $(document).ready(function () {
+            $(document).on('input', '.select_ocultar', function () {
+                let campo_select = $(this); //campo select
+                let valor_campo_select = $(this).val(); //valor do campo select
+                let alvo = $(this).attr('data-alvo_ocultar'); //valor do data-alvo
+                let valor_ocultar = $(this).attr('data-valor_ocultar') //valor do data-valor-ocultar
+                let array_valor_ocultar = valor_ocultar.split(',') //concatenando o array
+                if (array_valor_ocultar.includes(valor_campo_select)) {
+                    $(alvo).css('display', 'none');
+                } else {
+                    $(alvo).css('display', 'block')
+                }
+            })
+            $('.select_ocultar').trigger('input')
+            $(document).on('input', '.select_desabilitar', function () {
+                let campo_select = $(this);
+                let valor_campo_select = $(this).val();
+                let alvo = $(this).attr('data-alvo_desabilitar');
+                let valor_desabilitar = $(this).attr('data-valor_desabilitar')
+                let array_valor_desabilitar = valor_desabilitar.split(',')
+                if (array_valor_desabilitar.includes(valor_campo_select)) {
+                    $(alvo).attr('disabled', true)
+                } else {
+                    $(alvo).removeAttr('disabled')
+                }
+            })
+            $('.select_desabilitar').trigger('input')
+        })
+
+        $(document).on('invalid', '.formulario-campo', function () {
+            alert("oi");
+        })
+
+        $(document).ready(function () {
+            $(document).on('input', '#CheckMarcarDesmarcar', function () {
+                let botao_marcar_desmarcar = $(this)
+                let qtd_inputs = $('.checkboxSelAll').find('input').length
+                let checkboxList = [];
+                let valor_data_check = $(this).attr('data-valor')
+                let array_checkbox = valor_data_check.split(',')
+                for (let i = 0; i < qtd_inputs; i++) {
+                    checkboxList.push($(this).parent().parent().find('.checkbox_alvo').eq(i))
+                }
+                for (let i = 0; i < checkboxList.length; i++) {
+                    if (botao_marcar_desmarcar.is(':checked')) {
+                        checkboxList[i].prop('checked', true)
+                    } else {
+                        checkboxList[i].prop('checked', false)
+                    }
+                }
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <style type="text/css">
+        .collapse_editar_buscar {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            z-index: 999;
+        }
+
+        .collapse_editar_buscar button {
+            height: 50px;
+            width: 50px;
+            border-radius: 50px;
+            margin-top: 5px;
+        }
+
+        .card_head button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #005182;
+            border: none;
+        }
+
+        .card {
+            background-color: transparent;
+            border: none;
+        }
+
+        .card button {
+            background-color: #005182;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card button:hover,
+        .card_head button:hover {
+            background-color: rgb(29, 29, 29);
+        }
+
+        .icone_seta {
+            color: white;
+        }
+    </style>
+
+    <script>
+        window.onkeydown = function (e) {
+            if (e.key === 'AltGraph' && e.key === '2') {
+                console.log('oi');
+            }
+        }
+    </script>
+    <div class="collapse_editar_buscar">
+        <div class="collapse in" id="collapseEditarBuscar">
+            <div class="card">
+                <button class="btn btn-dark" type="button"><i class="material-icons">search</i></button>
+                <button class="btn btn-dark" type="button"><i class="material-icons">edit</i></button>
+            </div>
+        </div>
+        <div class="card_head">
+            <button class="btnSeta" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEditarBuscar"
+                aria-expanded="false" aria-controls="collapseExample">
+                <i class="material-icons icone_seta">arrow_drop_up</i>
+            </button>
+        </div>
+    </div>
+    <div class="container">
+        <ul class="d-none" id="meuMenuDeContexto">
+            <li>Copiar texto</li>
+        </ul>
+        <form action="">
+            <h1 class="mt-5 mb-4">Campos de validação</h1>
+            <p>Validaçao de CPF e CNPJ no mesmo campo</p>
+
+            <p>Validaçao de CPF individual</p>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control campo-formulario campo_numero" maxlength="6"
+                    placeholder="Informe o CPF" required>
+                <label>CPF do cliente</label>
+            </div>
+            <p>Validaçao de CNPJ individual</p>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control campo_cpf" placeholder="Informe o CNPJ"
+                    pattern="(\d{3}\.?\d{3}\.?\d{3}-?\d{2})">
+                <label>CNPJ do cliente</label>
+            </div>
+            <p>Código com 0 a esquerda customizável</p>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control codigo" placeholder="Informe o Código" pattern="[0-9]+$">
+                <label>CÓDIGO</label>
+            </div>
+            <p>Validação de código pis</p>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control cod_pis" placeholder="Informe o Código pis"
+                    pattern="\d{3}\.?\d{5}\.?\d{2}-?\d{1}">
+                <label>PIS</label>
+            </div>
+            <p>Validação de CNH</p>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control cod_cnh" placeholder="Informe o número da sua CNH"
+                    pattern="[0-9]{11}">
+                <label>CNH</label>
+            </div>
+            <p>Validação de endereço de email</p>
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control end_email" placeholder="Informe o endereço de email"
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                <label>Endereço de email</label>
+            </div>
+            <p>Validação de nome completo</p>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control nome_sobrenome" placeholder="Informe o nome completo"
+                    pattern="/\b[A-Za-zÀ-ú][A-Za-zÀ-ú]+,?\s[A-Za-zÀ-ú][A-Za-zÀ-ú]{2,19}\b/gi">
+                <label>Nome completo</label>
+            </div>
+            <p>Validação de telefone</p>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control telefone" name="telefone" placeholder="Informe o Telefone"
+                    pattern="[0-9]{2}-[0-9]{4,6}-[0-9]{3,4}$">
+                <label>Telefone</label>
+            </div>
+            <p>Validação de RG</p>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control campo_rg" name="rg" placeholder="Informe o RG"
+                    pattern="(\d{1}\.?\d{3}\.?\d{3}-?\d{1})|(\d{2}\.?\d{3}\.?\d{3}-?\d{1})">
+                <label>RG</label>
+            </div>
+            <div class="campo_viacep">
+                <h1 class="mt-5 mb-4">Validação de endereço</h1>
+                <p>Validação de CEP com a api ViaCep</p>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control cep" name="cep" placeholder="Informe o CEP"
+                        pattern="/^[0-9]{5}-[0-9]{3}$/">
+                    <label>CEP do cliente</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control logradouro" name="logradouro" placeholder="Informe o CEP"
+                        pattern="^(RUA|Rua|R.|AVENIDA|Avenida|AV.|TRAVESSA|Travessa|TRAV.|Trav.) ([a-zA-Z_\s]+)">
+                    <label>Logradouro</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control cep" name="complemento" placeholder="Informe o CEP">
+                    <label>Complemento</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control cep" name="bairro" placeholder="Informe o CEP">
+                    <label>Bairro</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control cep" name="cidade" placeholder="Informe o CEP">
+                    <label>Cidade</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control cep" name="uf" placeholder="Informe o UF">
+                    <label>UF</label>
+                </div>
+            </div>
+            <div class="Inputs_conta_bancaria">
+                <h1 class="mt-5 mb-4">Validador de dados conta bancária</h1>
+                <div class="Input_numero_banco form-floating mb-3">
+                    <select class="numero_banco form-control" id="numero_banco">
+                        <option value="001">BANCO DO BRASIL S.A.</option>
+                        <option value="237">BANCO BRADESCO S.A.</option>
+                        <option value="341">BANCO ITAÚ S.A.</option>
+                        <option value="104">CAIXA ECONOMICA FEDERAL</option>
+                        <option value="033">BANCO SANTANDER BANESPA S.A.</option>
+                        <option value="399">HSBC BANK BRASIL S.A.</option>
+                        <option value="151">BANCO NOSSA CAIXA S.A.</option>
+                        <option value="745">BANCO CITIBANK S.A.</option>
+                        <option value="041">BANCO DO ESTADO DO RIO GRANDE DO SUL S.A.</option>
+                    </select>
+                    <label>Telefone</label>
+                </div>
+                <div class="Input_numero_banco form-floating mb-3">
+                    <input class="numero_agencia form-control" id="numero_agencia" placeholder="Agência" type="text"
+                        pattern="[0-9]{4}" />
+                    <label>Número agência</label>
+                </div>
+                <div class="Input_digito_numero_agencia form-floating mb-3">
+                    <input class="digito_numero_agencia form-control" id="digito_numero_agencia"
+                        placeholder="Dígito da agência" type="text" pattern="[0-9]{0,1}" maxlength="1" />
+                    <label>Dígito de número agencia</label>
+                </div>
+                <div class="Input_numero_conta mb-3 form-floating">
+                    <input class="numero_conta form-control" id="numero_conta" placeholder="Conta Corrente" type="text"
+                        pattern="[0-9]{7,8}" />
+                    <label>Número conta</label>
+                </div>
+                <div class="Input_digito_numero_conta form-floating mb-3">
+                    <input class="digito_numero_conta form-control" id="digito_numero_conta"
+                        placeholder="Dígito da conta corrente" type="text" pattern="[0-9]{0,1}" maxlength="1" />
+                    <label>Digito número conta</label>
+                </div>
+                <div class="BotaoVerificar mb-3">
+                    <input type="button" class="btn btn-primary" value="Verificar conta" id="validate_bank_account" />
+                </div>
+            </div>
+            <div class="validacao_cartao mt-5 mb-4">
+                <h1 class="mb-4">Validação de cartão de crédito</h1>
+                <div class="Input_tipo_cartao form-floating mb-3">
+                    <select class="tipo_cartao form-control" id="numero_banco">
+                        <option value="none">Tipo de cartão</option>
+                        <option value="mastercard">Mastercard</option>
+                        <option value="elo">Elo</option>
+                        <option value="american_express">American express</option>
+                        <option value="visa">Visa</option>
+                        <option value="discover">Discover</option>
+                        <option value="jcb">JCB</option>
+                        <option value="diner_club">Diner's club</option>
+                        <option value="maestro">Maestro</option>
+                    </select>
+                    <label>Tipo cartão</label>
+                </div>
+                <div class="Input_numero_cartao form-floating mb-3">
+                    <input class="numero_cartao form-control" name="numero_cartao" disabled>
+                    <label>Número do cartão</label>
+                </div>
+                <div class="Input_numero_cvv form-floating mb-3">
+                    <input class="numero_cvv form-control" name="numero_cvv" disabled>
+                    <label>CVV</label>
+                </div>
+                <div class="Input_numero_mm form-floating mb-3">
+                    <input type="text" class="numero_mm form-control" name="numero_mm" maxlength="2"
+                        pattern="(0[1-9]|1[0-12])" disabled>
+                    <label>MM</label>
+                </div>
+                <div class="Input_numero_yy form-floating mb-3">
+                    <input type="text" class="numero_yy form-control" name="numero_yy" maxlength="2" pattern="[0-9]{2}"
+                        disabled>
+                    <label>YY</label>
+                </div>
+                <div class="Input_nome_titular form-floating mb-3">
+                    <input type="text" class="nome_titular form-control" name="nome_titular"
+                        pattern="/\b[A-Za-zÀ-ú][A-Za-zÀ-ú]+,?\s[A-Za-zÀ-ú][A-Za-zÀ-ú]{2,19}\b/gi" disabled>
+                    <label>Titular do cartão</label>
+                </div>
+            </div>
+            <div>
+                <h1 class="mt-5 mb-4">Select ocultar e Desabilitar</h1>
+                <div class="campo_select_ocultar form-floating mb-3">
+                    <select class="select_ocultar form-control" data-alvo_ocultar=".ocultado" data-valor_ocultar="1,2">
+                        <option value="1">1 (ocultar)</option>
+                        <option value="2">2 (ocultar)</option>
+                        <option value="3">3 (exibir)</option>
+                    </select>
+                    <label>Select
+                        Ocultar</label>
+                </div>
+                <div class="campo_select_desabilitar form-floating mb-3">
+                    <select class="select_desabilitar form-control" data-alvo_desabilitar=".desabilitado"
+                        data-valor_desabilitar="3">
+                        <option value="1">1 (habilitar)</option>
+                        <option value="2">2 (habilitar)</option>
+                        <option value="3">3 (Desabilitar)</option>
+                    </select>
+                    <label>Select
+                        Desabilitar</label>
+                </div>
+                <div class="Input_teste_1 form-floating mb-3 ocultado">
+                    <input type="text" class="text_teste_1 desabilitado form-control" id="text_teste_1">
+                    <label>Input teste 1</label>
+                </div>
+                <div class="Input_teste_2 form-floating  mb-3 ocultado">
+                    <input type="text" class="text_teste_2 desabilitado form-control" id="text_teste_2">
+                    <label>Input teste 2</label>
+                </div>
+                <div class="Input_teste_3 form-floating mb-3 ocultado">
+                    <input type="text" class="text_teste_3 desabilitado form-control" id="text_teste_3">
+                    <label>Input teste 3</label>
+                </div>
+
+            </div>
+            <div>
+                <h1 class="mt-5 mb-4">Checkbox marcar todos e desmarcar todos</h1>
+                <div class="checkboxSelAll form-floating mb-3">
+                    <div class="checkboxOp">
+                        <input class="checkbox_alvo" type="checkbox" id="sel_1">
+                        <label>Opção 1</label>
+                    </div>
+                    <div class="checkboxOp">
+                        <input class="checkbox_alvo" type="checkbox" id="sel_2">
+                        <label>Opção 2</label>
+                    </div>
+                    <div class="checkboxOp">
+                        <input class="checkbox_alvo" type="checkbox" id="sel_3">
+                        <label>Opção 3</label>
+                    </div>
+                    <div class="checkboxOp">
+                        <input class="checkbox_alvo" type="checkbox" id="sel_4">
+                        <label>Opção 4</label>
+                    </div>
+                </div>
+                <div class="form-floating btn-lg mb-3">
+                    <input type="checkbox" id="CheckMarcarDesmarcar" data-valor="1,2,3,4" name="BotaoMarcarDesmarcar">
+                    Marcar todos
+                </div>
+            </div>
+            <div class="form-floating mb-3">
+                <button type="submit" class="btn btn-primary" id="BotaoSubmit" name="BotaoSubmit">Submit</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

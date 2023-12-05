@@ -1,0 +1,185 @@
+<html lang="pt_br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Aplicativo Casa Nova Locadora</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"
+        integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+    <script src="../js/script.js"></script>
+    <link href="./css/style.css" rel="stylesheet">
+    <script src="../js/jquery.cookie.js"></script>
+</head>
+<body>
+    <div class="container position-relative">
+        <script>
+            $(document).ready(function () {
+                $('.dragImagem').draggable();
+                $(document).on('change', '#importarMusicaVideo', function () {
+                    let este = $(this);
+                    let inputMusica = $('.inputImportarMusica');
+                    var file = document.getElementById('importarMusicaVideo').files[0];
+                    inputMusica.val(file.name);
+                })
+                if ($("#sort1").length) {
+                    $("#sort1").sortable({
+                        helper: "clone",
+                        opacity: 0.5,
+                        cursor: "crosshair",
+                        connectWith: ".list",
+                    });
+                    $("#sort1").disableSelection();
+                }
+            })
+        </script>
+        <!--Cabeçalho da pagina (Titulo, botoes e descrição)-->
+        <form method="post">
+            <div class="pt-2">
+                <div class="titulo d-flex justify-content-between align-items-center mb-1">
+                    <div>
+                        <h2 class="mb-0">Gerar vídeo do imóvel</h2>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-end">
+                    </div>
+                </div>
+                <div class="descricao py-1">
+                    <p class="mb-2">Gere um vídeo baseado nas fotos exibidas abaixo.</p>
+                </div>
+            </div>
+            <div class="conteudo">
+                <div class="row px-2">
+                    <div class="col-2">
+                        <div class="form-floating">
+                            <select class="form-select">
+                                <option value="2" selected>2 segundos</option>
+                            </select>
+                            <label>Tempo de foto</label>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <!--campo file-->
+                        <div class="w-100 form-floating">
+                            <input class="form-control gatilhoEvento inputImportarMusica" id="InputImportarMusica" data-evento="click" 
+                                data-target="#importarMusicaVideo" value="Selecione o arquivo" readonly placeholder="Selecionar arquivo">
+                            <label>Importar musica</label>
+                            <input class="d-none" type="file" id="importarMusicaVideo" accept=".mp3,.ogg">
+                        </div>
+                    </div>
+                    <div class="col-2 m-0">
+                        <div class="form-floating">
+                            <select class="form-select">
+                                <option value="1" selected>Sim</option>
+                                <option value="0">Não</option>
+                            </select>
+                            <label>Incluir contato</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-floating">
+                            <select class="form-select">
+                                <option value="1" selected>Sim</option>
+                                <option value="0">Não</option>
+                            </select>
+                            <label>Incluir contato</label>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="d-flex h-100 justify-content-center align-items-center">
+                            <button type="submit" class="btn btn-primary w-50 h-100 d-flex align-items-center justify-content-center mx-1">
+                                <span class="material-icons me-1">qr_code</span>
+                                QR code
+                            </button>
+                            <button type="submit" class="btn btn-success w-50 h-100 d-flex align-items-center justify-content-center">
+                                <span class="material-icons">play_arrow</span>
+                                Gerar video
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div>
+                    <p>Selecione e arraste as imagens</p>
+                    <div class="w-100 p-2 rounded border">
+                        <div class="row px-2 position-relative" id="sort1">
+                            <div class="col-2 px-1 draggable">
+                                <label>
+                                    <input class="position-absolute ms-1 form-check" type="checkbox">
+                                    <img class="h-auto w-100 rounded" src="https://api.casanova.imb.br/Imovel_foto/capa/355">
+                                </label>
+                                <div class="w-100">
+                                    <input value="1" class="form-floating border-0 w-100">
+                                </div>
+                            </div>
+                            <div class="col-2 px-1 draggable">
+                                <label>
+                                    <input class="position-absolute ms-1 form-check" type="checkbox">
+                                    <img class="h-auto w-100 rounded" src="https://api.casanova.imb.br/Imovel_foto/capa/355">
+                                </label>
+                                <div class="w-100">
+                                    <input value="2" class="form-floating border-0 w-100">
+                                </div>
+                            </div>
+                            <div class="col-2 px-1 draggable">
+                                <label>
+                                    <input class="position-absolute ms-1 form-check" type="checkbox">
+                                    <img class="h-auto w-100 rounded" src="https://api.casanova.imb.br/Imovel_foto/capa/355">
+                                </label>
+                                <div class="w-100">
+                                    <input value="3" class="form-floating border-0 w-100">
+                                </div>
+                            </div>
+                            <div class="col-2 px-1 draggable">
+                                <label>
+                                    <input class="position-absolute ms-1 form-check" type="checkbox">
+                                    <img class="h-auto w-100 rounded" src="https://api.casanova.imb.br/Imovel_foto/capa/355">
+                                </label>
+                                <div class="w-100">
+                                    <input value="3" class="form-floating border-0 w-100">
+                                </div>
+                            </div>
+                            <div class="col-2 px-1 draggable">
+                                <label>
+                                    <input class="position-absolute ms-1 form-check" type="checkbox">
+                                    <img class="h-auto w-100 rounded" src="https://api.casanova.imb.br/Imovel_foto/capa/355">
+                                </label>
+                                <div class="w-100">
+                                    <input value="4" class="form-floating border-0 w-100">
+                                </div>
+                            </div>
+                            <div class="col-2 px-1 draggable">
+                                <label>
+                                    <input class="position-absolute ms-1 form-check" type="checkbox">
+                                    <img class="h-auto w-100 rounded" src="https://api.casanova.imb.br/Imovel_foto/capa/355">
+                                </label>
+                                <div class="w-100">
+                                    <input value="5" class="form-floating border-0 w-100">
+                                </div>
+                            </div>
+                            <div class="col-2 px-1 draggable">
+                                <label>
+                                    <input class="position-absolute ms-1 form-check" type="checkbox">
+                                    <img class="h-auto w-100 rounded" src="https://api.casanova.imb.br/Imovel_foto/capa/355">
+                                </label>
+                                <div class="w-100">
+                                    <input value="6" class="form-floating border-0 w-100">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

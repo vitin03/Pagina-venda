@@ -1,0 +1,1588 @@
+<!doctype html>
+<html lang="pt_br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Aplicativo Casa Nova Locadora</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"
+        integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src='/public/js/script.js'></script>
+    <script src='/public/js/jquery.cookie.js'></script>
+    <link href="/public/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- menu lead flutuante -->
+    <style>
+        .div_lead .lead-options {
+            z-index: 99;
+            border-radius: 40px;
+            width: 60px;
+            padding-bottom: 54px;
+            left: 15px;
+        }
+
+        .div_lead .titulo-opcoes {
+            left: 74px;
+            background-color: rgb(232, 232, 232) !important;
+            position: fixed;
+            z-index: 9999;
+        }
+
+        .div_lead .botao_icone_lead {
+            z-index: 99999;
+            width: 60px;
+            height: 60px;
+            left: 15px;
+            bottom: 15px;
+        }
+
+        .abrirDetalhesLead:hover .lead-options {
+            display: block !important;
+            animation-name: subirMenuLead;
+            animation-duration: 0.3s;
+            animation-fill-mode: forwards;
+        }
+
+        .div_lead .lead-item-texto:hover {
+            background-color: rgb(104, 154, 230) !important;
+        }
+
+        .div_lead .lead-items-border-top {
+            height: 2px;
+            width: 100%;
+        }
+
+        .div_lead .lead-items-border-bottom {
+            bottom: 60px;
+            height: 2px;
+            width: 100%;
+        }
+
+        .div_lead .lead-item-texto-user {
+            color: white;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+        }
+
+        .div_lead .lead-items {
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        .div_lead .Lead-item-texto span {
+            padding-left: 9px;
+        }
+
+        .div_lead .botao_icone_lead:hover {
+            background-color: #1a429f !important;
+        }
+
+        .div_lead .botao_icone_lead:hover+.lead-options {
+            background-color: #1a429f !important;
+        }
+
+        @keyframes subirMenuLead {
+            0% {
+                opacity: 0%;
+                bottom: 10px;
+            }
+
+            100% {
+                opacity: 100%;
+                bottom: 20px;
+            }
+        }
+
+        .w-350-p {
+            width: 350px !important;
+        }
+
+        .botaoSubmitFiltroImovel {
+            height: 58px !important;
+        }
+    </style>
+    <style type="text/css">
+        body {
+            margin-top: 60px;
+        }
+
+        @media all and (min-width: 992px) {
+            .dropdown-menu li {
+                position: relative;
+                padding-left: 16px;
+                padding-right: 10px;
+            }
+
+            .dropdown-menu li i.seta {
+                position: absolute;
+                right: 5px;
+                top: 5px;
+                font-size: 20px;
+            }
+
+            .dropdown-menu li i.icone {
+                position: absolute;
+                left: 3px;
+                top: 5px;
+                font-size: 24px;
+            }
+
+            .dropdown-menu li a {
+                width: 100%;
+            }
+
+            .dropdown-menu .submenu {
+                display: none;
+                position: absolute;
+                left: 100%;
+                top: -7px;
+            }
+
+            .dropdown-menu .submenu-left {
+                right: 100%;
+                left: auto;
+            }
+
+            .dropdown-menu>li:hover {
+                background-color: #f1f1f1
+            }
+
+            .dropdown-menu>li:hover>.submenu {
+                display: block;
+            }
+        }
+
+        @media (max-width: 991px) {
+            .dropdown-menu .dropdown-menu {
+                margin-left: 0.7rem;
+                margin-right: 0.7rem;
+                margin-bottom: .5rem;
+            }
+        }
+    </style>
+    <div class="container pagina-buscar-imoveis">
+        <div class="d-flex justify-content-between">
+            <div class="d-flex flex-column">
+                <div class="titulo d-flex justify-content-between">
+                    <h2 class="pt-2">Busca de imóveis</h2>
+                </div>
+                <div class="descricao">
+                    <p class="my-1">Aqui você poderá buscar os imóveis do sistema</p>
+                </div>
+            </div>
+            <div class="d-flex flex-column">
+                <div>
+                    <form class="m-0 d-flex align-items-center mt-3">
+                        <div class="form-floating me-1">
+                            <select class="form-select">
+                                <option value="1">Código</option>
+                                <option value="2">Prego</option>
+                                <option value="3">Endereço</option>
+                                <option value="4">Proprietário</option>
+                            </select>
+                            <label>Buscar por:</label>
+                        </div>
+                        <div class="form-floating w-350-p me-1">
+                            <input type="text" class="form-control" placeholder="Valor de pesquisa">
+                            <label>Valor de pesquisa</label>
+                        </div>
+                        <button type="submit" class="btn btn-success d-flex justify-content-center align-items-center botaoSubmitFiltroImovel">
+                            <span class="material-icons">search</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <form class="pt-2" id="formulario">
+            <div class="card bg-light border border-secondary shadow">
+                <div class="card-body">
+                    <!--<p class="card-text">Escolha as opções para realizar uma busca
+                    </p> -->
+                    <div class="row">
+                        <div class="col-3 p-1 position-relative grupoOpcaoBusca h-auto"
+                            title="Informe se o imóvel é para fins comerciais, residênciais ou ambos.">
+                            <div>
+                                <div data-titulo="Finalidade" class="botaoOpcaoBuscaImovel w-100" data-filtro="0" data-input="radio">
+                                    <label class="p-1 px-2">Finalidade</label>
+                                    <p class="px-2">Selecione um valor:</p>
+                                </div>
+                            </div>
+                            <div class="d-none position-absolute selectOpcaoBuscaImovel bg-light border rounded border-secondary w-100 p-2">
+                                <input type="text" name="pesq_finalidade" class="d-none form-control campoFiltrarSelect w-100 mb-2" placeholder="Filtrar">
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_finalidade" value="-1">
+                                        Todos
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_finalidade" value="1">
+                                        Comercial 
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_finalidade" value="2">
+                                        Residencial
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 p-1 position-relative grupoOpcaoBusca h-auto" title="Selecione o tipo de imóvel desejado. É possível selecionar mais de um tipo de imóvel.">
+                            <div>
+                                <div data-titulo="Tipo de imóvel" class="botaoOpcaoBuscaImovel w-100" data-filtro="1" data-input="checkbox">
+                                    <label class="p-1 px-2">Tipo de imóvel</label>
+                                    <p class="px-2">Selecione um valor:</p>
+                                </div>
+                            </div>
+                            <div class="d-none position-absolute selectOpcaoBuscaImovel bg-light border rounded border-secondary w-100 p-2">
+                                <input type="text" name="pesq_tipo" class="d-none form-control campoFiltrarSelect w-100 mb-2" placeholder="Filtrar">
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_tipo" value="19">
+                                        Andar
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_tipo" value="8">
+                                        Apartamento
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_tipo" value="12">
+                                        Barracão
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_tipo" value="11">
+                                        Casa
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_tipo" value="7">
+                                        Cobertura
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_tipo" value="9">
+                                        Flat
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_tipo" value="18">
+                                        Galpão
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_tipo" value="10">
+                                        Kitnet
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_tipo" value="15">
+                                        Loja
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_tipo" value="17">
+                                        Lote
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_tipo" value="16">
+                                        Sala
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_tipo" value="14">
+                                        Sobrado
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_tipo" value="13">
+                                        Sítio
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_tipo" value="21">
+                                        Teste
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_tipo" value="20">
+                                        ?�rea
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 p-1 position-relative grupoOpcaoBusca h-auto" title="Informe em qual cidade deve ser efetuada a busca de imóveis.">
+                            <div>
+                                <div data-titulo="Cidade" class="botaoOpcaoBuscaImovel w-100" data-filtro="0" data-input="radio">
+                                    <label class="p-1 px-2">Cidade</label>
+                                    <p class="px-2">Selecione um valor:</p>
+                                </div>
+                            </div>
+                            <div class="d-none position-absolute selectOpcaoBuscaImovel bg-light border rounded border-secondary w-100 p-2">
+                                <input type="text" name="pesq_cidade" class="d-none form-control campoFiltrarSelect w-100 mb-2" placeholder="Filtrar">
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_cidade" value="BELO HORIZONTE">
+                                        Belo Horizonte
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_cidade" value="CARMO DO CAJURU">
+                                        Carmo do Cajuru
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_cidade" value="DIVINOPOLIS" checked>
+                                        Divinopolis
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_cidade" value="DIVINÓPOLIS">
+                                        Divinópolis
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_cidade" value="SAO GONCALO DO PARA">
+                                        Sao Goncalo do Para
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 p-1 position-relative grupoOpcaoBusca h-auto" title="Inforem em quais bairros procurar o imóvel. Você pode selecionar mais de um bairro.">
+                            <div>
+                                <div data-titulo="Bairro" class="botaoOpcaoBuscaImovel w-100" data-filtro="1" data-input="checkbox">
+                                    <label class="p-1 px-2">Bairro</label>
+                                    <p class="px-2">Selecione um valor:</p>
+                                </div>
+                            </div>
+                            <div class="d-none position-absolute selectOpcaoBuscaImovel bg-light border rounded border-secondary w-100 p-2">
+                                <input type="text" name="pesq_bairros" class="d-none form-control campoFiltrarSelect w-100 mb-2" placeholder="Filtrar">
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="ANTONIO FONSECA">
+                                        Antonio Fonseca
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="BELVEDERE">
+                                        Belvedere
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="BELVEDERE II">
+                                        Belvedere II
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="BOM PASTOR">
+                                        Bom Pastor
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="CACHOEIRINHA">
+                                        Cachoeirinha
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="CAMPINA VERDE">
+                                        Campina Verde
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="CATALAO">
+                                        Catalao
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="CENTRO ">
+                                        Centro
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="CHANADOR">
+                                        Chanador
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="DANILO PASSOS II">
+                                        Danilo Passos II
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="DONA ROSA">
+                                        Dona Rosa
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="ERMIDA">
+                                        Ermida
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="ESPLANADA">
+                                        Esplanada
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="ESPÍRITO SANTO">
+                                        Espírito Santo
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="FABIO NOTINI">
+                                        Fabio Notini
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="GERALDO PEREIRA">
+                                        Geraldo Pereira
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="ICARAI">
+                                        Icarai
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="INTERLAGOS">
+                                        Interlagos
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="IPIRANGA">
+                                        Ipiranga
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="JARDIM ALTEROSA">
+                                        Jardim Alterosa
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="JARDIM DAS ACACIAS">
+                                        Jardim das Acacias
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="JARDIM DAS OLIVEIRAS">
+                                        Jardim das Oliveiras
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="JARDINOPOLIS">
+                                        Jardinopolis
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="L. P. PEREIRA">
+                                        L. P. Pereira
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="LAGOA DOS MANDARINS">
+                                        Lagoa dos Mandarins
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="MANOEL VALINHOS">
+                                        Manoel Valinhos
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="NACOES">
+                                        Nacoes
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="NITEROI">
+                                        Niteroi
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="NITERÓI ">
+                                        Niterói
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="NOSSA SRA APARECIDA">
+                                        Nossa Sra Aparecida
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="NOSSA SRA DAS GRACAS">
+                                        Nossa Sra das Gracas
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="NOSSA SRA DE LOURDES">
+                                        Nossa Sra de Lourdes
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="ORION">
+                                        Orion
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="PADRE EUSTAQUIO">
+                                        Padre Eustaquio
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="PLANALTO">
+                                        Planalto
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="PONTE FUNDA">
+                                        Ponte Funda
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="PORTO VELHO">
+                                        Porto Velho
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="REALENGO">
+                                        Realengo
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="SANTA CLARA">
+                                        Santa Clara
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="SANTA LUCIA">
+                                        Santa Lucia
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="SANTA ROSA">
+                                        Santa Rosa
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="SANTO ANTONIO">
+                                        Santo Antonio
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="SANTOS DUMONT">
+                                        Santos Dumont
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="SAO JOAO DE DEUS">
+                                        Sao Joao de Deus
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="SAO JOSE">
+                                        Sao Jose
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="SAO JUDAS">
+                                        Sao Judas
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="SAO JUDAS TADEU">
+                                        Sao Judas Tadeu
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="SAO LUCAS">
+                                        Sao Lucas
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="SAO LUIZ">
+                                        Sao Luiz
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="SIDIL">
+                                        Sidil
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="SÃO JOSÉ">
+                                        São José
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_bairros" value="VILA CRUZEIRO">
+                                        Vila Cruzeiro
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-3 p-1 position-relative grupoOpcaoBusca h-auto" title="Selecione um valor mínio e máximo para a área do imóvel desejado.">
+                            <div>
+                                <div data-titulo="Área" class="botaoOpcaoBuscaImovel w-100" data-filtro="0">
+                                    <label class="p-1 px-2">Área</label>
+                                    <p class="px-2">Selecione um valor:</p>
+                                </div>
+                            </div>
+                            <div class="d-none d-flex flex-wrap justify-content-between position-absolute selectOpcaoBuscaImovel bg-light border rounded border-secondary w-100 p-2">
+                                <div class="form-check w-100 px-1">
+                                    <label class="form-check-label labelOptionFormCheck my-1 w-100">
+                                        <select class="form-select optionformCheck selectAjustarValor ajustarValorMinimo"
+                                            name="pesq_campo15">
+                                            <option value="">Valor inicial</option>
+                                            <option value="10">10m²</option>
+                                            <option value="20">20m²</option>
+                                            <option value="30">30m²</option>
+                                            <option value="40">40m²</option>
+                                            <option value="50">50m²</option>
+                                            <option value="60">60m²</option>
+                                            <option value="80">80m²</option>
+                                            <option value="100">100m²</option>
+                                            <option value="120">120m²</option>
+                                            <option value="150">150m²</option>
+                                            <option value="200">200m²</option>
+                                            <option value="300">300m²</option>
+                                            <option value="500">500m²</option>
+                                            <option value="1000">1.000m²</option>
+                                            <option value="2000">2.000m²</option>
+                                            <option value="3000">3.000m²</option>
+                                            <option value="5000">5.0000m²</option>
+                                            <option value="10000">10.000m²</option>
+                                            <option value="50000">50.000m²</option>
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="form-check w-100 px-1">
+                                    <label class="form-check-label labelOptionFormCheck my-1 w-100">
+                                        <select class="form-select optionformCheck selectAjustarValor ajustarValorMaximo" name="pesq_campo15">
+                                            <option value="">Valor final</option>
+                                            <option value="10">10m²</option>
+                                            <option value="20">20m²</option>
+                                            <option value="30">30m²</option>
+                                            <option value="40">40m²</option>
+                                            <option value="50">50m²</option>
+                                            <option value="60">60m²</option>
+                                            <option value="80">80m²</option>
+                                            <option value="100">100m²</option>
+                                            <option value="120">120m²</option>
+                                            <option value="150">150m²</option>
+                                            <option value="200">200m²</option>
+                                            <option value="300">300m²</option>
+                                            <option value="500">500m²</option>
+                                            <option value="1000">1.000m²</option>
+                                            <option value="2000">2.000m²</option>
+                                            <option value="3000">3.000m²</option>
+                                            <option value="5000">5.0000m²</option>
+                                            <option value="10000">10.000m²</option>
+                                            <option value="50000">50.000m²</option>
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 p-1 position-relative grupoOpcaoBusca h-auto" title="Selecione um valor mínimo e máximo para o aluguel do imóvel.">
+                            <div>
+                                <div data-titulo="Valor do aluguel" class="botaoOpcaoBuscaImovel w-100" data-filtro="0">
+                                    <label class="p-1 px-2">Valor do aluguel</label>
+                                    <p class="px-2">Selecione um valor:</p>
+                                </div>
+                            </div>
+                            <div class="d-none d-flex flex-wrap justify-content-between position-absolute selectOpcaoBuscaImovel bg-light border rounded border-secondary w-100 p-2">
+                                <div class="form-check w-100 px-1">
+                                    <label class="form-check-label labelOptionFormCheck my-1 w-100">
+                                        <select class="form-select optionformCheck selectAjustarValor ajustarValorMinimo" name="pesq_valor_aluguel">
+                                            <option value="">Valor inicial</option>
+                                            <option value="100">R$ 100,00</option>
+                                            <option value="300">R$ 300,00</option>
+                                            <option value="500">R$ 500,00</option>
+                                            <option value="700">R$ 700,00</option>
+                                            <option value="1000">R$ 1.000,00</option>
+                                            <option value="1500">R$ 1.500,00</option>
+                                            <option value="2000">R$ 2.000,00</option>
+                                            <option value="3000">R$ 3.000,00</option>
+                                            <option value="5000">R$ 5.000,00</option>
+                                            <option value="10000">R$ 10 mil</option>
+                                            <option value="20000">R$ 20 mil</option>
+                                            <option value="50000">R$ 50 mil</option>
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="form-check w-100 px-1">
+                                    <label class="form-check-label labelOptionFormCheck my-1 w-100">
+                                        <select class="form-select optionformCheck selectAjustarValor ajustarValorMaximo" name="pesq_valor_aluguel">
+                                            <option value="">Valor final</option>
+                                            <option value="100">R$ 100,00</option>
+                                            <option value="300">R$ 300,00</option>
+                                            <option value="500">R$ 500,00</option>
+                                            <option value="700">R$ 700,00</option>
+                                            <option value="1000">R$ 1.000,00</option>
+                                            <option value="1500">R$ 1.500,00</option>
+                                            <option value="2000">R$ 2.000,00</option>
+                                            <option value="3000">R$ 3.000,00</option>
+                                            <option value="5000">R$ 5.000,00</option>
+                                            <option value="10000">R$ 10 mil</option>
+                                            <option value="20000">R$ 20 mil</option>
+                                            <option value="50000">R$ 50 mil</option>
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 p-1 position-relative grupoOpcaoBusca h-auto" title="Informe a quantidade de quartos desejada. Você pode selecionar mais de um opção.">
+                            <div>
+                                <div data-titulo="Quartos" class="botaoOpcaoBuscaImovel w-100" data-filtro="0" data-input="checkbox">
+                                    <label class="p-1 px-2">Quartos</label>
+                                    <p class="px-2">Selecione um valor:</p>
+                                </div>
+                            </div>
+                            <div class="d-none position-absolute selectOpcaoBuscaImovel bg-light border rounded border-secondary w-100 p-2">
+                                <input type="text" name="pesq_campo2" class="d-none form-control campoFiltrarSelect w-100 mb-2" placeholder="Filtrar">
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_campo2" value="1">
+                                        1 Quarto
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_campo2" value="2">
+                                        2 Quartos
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_campo2" value="3">
+                                        3 Quartos
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_campo2" value="4">
+                                        4 Quartos
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_campo2" value="5">
+                                        5 Quartos
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_campo2" value="6">
+                                        6 Quartos
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_campo2" value="7">
+                                        7 Quartos
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_campo2" value="8">
+                                        8 Quartos
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_campo2" value="9">
+                                        9 Quartos
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_campo2" value="10">
+                                        10 Quartos
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_campo2" value="11">
+                                        11 Quartos
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 p-1 position-relative grupoOpcaoBusca h-auto" title="Selecione a quantidade mínima de banheiros que o imóvel precisa ter.">
+                            <div>
+                                <div data-titulo="Banheiros" class="botaoOpcaoBuscaImovel w-100" data-filtro="0" data-input="radio">
+                                    <label class="p-1 px-2">Banheiros</label>
+                                    <p class="px-2">Selecione um valor:</p>
+                                </div>
+                            </div>
+                            <div class="d-none position-absolute selectOpcaoBuscaImovel bg-light border rounded border-secondary w-100 p-2">
+                                <input type="text" name="pesq_campo8" class="d-none form-control campoFiltrarSelect w-100 mb-2" placeholder="Filtrar">
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo8" value="0">
+                                        Indiferente
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo8" value="1">
+                                        1 Banheiro
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo8" value="2">
+                                        2 Banheiros ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo8" value="3">
+                                        3 Banheiros ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo8" value="4">
+                                        4 Banheiros ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo8" value="5">
+                                        5 Banheiros ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo8" value="6">
+                                        6 Banheiros ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo8" value="7">
+                                        7 Banheiros ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo8" value="8">
+                                        8 Banheiros ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo8" value="9">
+                                        9 Banheiros ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo8" value="10">
+                                        10 Banheiros ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo8" value="11">
+                                        11 Banheiros ou mais
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 p-1 position-relative grupoOpcaoBusca h-auto" title="Informe se deseja que os banheiros tenham box.">
+                            <div>
+                                <div data-titulo="Banheiros com box" class="botaoOpcaoBuscaImovel w-100" data-filtro="0" data-input="radio">
+                                    <label class="p-1 px-2">Banheiros com box</label>
+                                    <p class="px-2">Selecione um valor:</p>
+                                </div>
+                            </div>
+                            <div class="d-none position-absolute selectOpcaoBuscaImovel bg-light border rounded border-secondary w-100 p-2">
+                                <input type="text" name="pesq_campo9" class="d-none form-control campoFiltrarSelect w-100 mb-2" placeholder="Filtrar">
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo9" value="-1" checked>
+                                        Indiferente
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo9" value="1">
+                                        Com Box
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo9" value="2">
+                                        Sem Box
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 p-1 position-relative grupoOpcaoBusca h-auto" title="Selecione a quantidade mínima de salas que o imóvel deve ter.">
+                            <div>
+                                <div data-titulo="Salas" class="botaoOpcaoBuscaImovel w-100" data-filtro="0" data-input="radio">
+                                    <label class="p-1 px-2">Salas</label>
+                                    <p class="px-2">Selecione um valor:</p>
+                                </div>
+                            </div>
+                            <div class="d-none position-absolute selectOpcaoBuscaImovel bg-light border rounded border-secondary w-100 p-2">
+                                <input type="text" name="pesq_campo6" class="d-none form-control campoFiltrarSelect w-100 mb-2" placeholder="Filtrar">
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo6" value="0">
+                                        Indiferente
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo6" value="1">
+                                        1 Sala ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo6" value="2">
+                                        2 Salas ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo6" value="3">
+                                        3 Salas ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo6" value="4">
+                                        4 Salas ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo6" value="5">
+                                        5 Salas ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo6" value="6">
+                                        6 Salas ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo6" value="7">
+                                        7 Salas ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo6" value="8">
+                                        8 Salas ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo6" value="9">
+                                        9 Salas ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo6" value="10">
+                                        10 Salas ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo6" value="11">
+                                        11 Salas ou mais
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 p-1 position-relative grupoOpcaoBusca h-auto" title="Selecione a quantidade mínima de suítes que o imóvel deve ter.">
+                            <div>
+                                <div data-titulo="Suites" class="botaoOpcaoBuscaImovel w-100" data-filtro="0" data-input="radio">
+                                    <label class="p-1 px-2">Suites</label>
+                                    <p class="px-2">Selecione um valor:</p>
+                                </div>
+                            </div>
+                            <div class="d-none position-absolute selectOpcaoBuscaImovel bg-light border rounded border-secondary w-100 p-2">
+                                <input type="text" name="pesq_campo3" class="d-none form-control campoFiltrarSelect w-100 mb-2" placeholder="Filtrar">
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo3" value="0">
+                                        Indiferente
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo3" value="1">
+                                        1 Suite ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo3" value="2">
+                                        2 Suites ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo3" value="3">
+                                        3 Suites ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo3" value="4">
+                                        4 Suites ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo3"
+                                            value="5">
+                                        5 Suites ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo3" value="6">
+                                        6 Suites ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo3" value="7">
+                                        7 Suites ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo3" value="8">
+                                        8 Suites ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo3" value="9">
+                                        9 Suites ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo3" value="10">
+                                        10 Suites ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo3" value="11">
+                                        11 Suites ou mais
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 p-1 position-relative grupoOpcaoBusca h-auto" title="Informe se o cliente deseja que o imóvel tenha Varanda.">
+                            <div>
+                                <div data-titulo="Varanda" class="botaoOpcaoBuscaImovel w-100" data-filtro="0" data-input="checkbox">
+                                    <label class="p-1 px-2">Varanda</label>
+                                    <p class="px-2">Selecione um valor:</p>
+                                </div>
+                            </div>
+                            <div class="d-none position-absolute selectOpcaoBuscaImovel bg-light border rounded border-secondary w-100 p-2">
+                                <input type="text" name="pesq_campo5" class="d-none form-control campoFiltrarSelect w-100 mb-2" placeholder="Filtrar">
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_campo5" value="-1" checked>
+                                        Em Qualquer Comodo
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_campo5" value="1">
+                                        Na Sala
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_campo5" value="2">
+                                        Nos Quartos
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 p-1 position-relative grupoOpcaoBusca h-auto" title="Informe se e onde o cliente deseja que o imóvel tenha armários.">
+                            <div>
+                                <div data-titulo="Armários" class="botaoOpcaoBuscaImovel w-100" data-filtro="0" data-input="checkbox">
+                                    <label class="p-1 px-2">Armários</label>
+                                    <p class="px-2">Selecione um valor:</p>
+                                </div>
+                            </div>
+                            <div class="d-none position-absolute selectOpcaoBuscaImovel bg-light border rounded border-secondary w-100 p-2">
+                                <input type="text" name="pesq_armarios" class="d-none form-control campoFiltrarSelect w-100 mb-2" placeholder="Filtrar">
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_armarios" value="0">
+                                        Em Qualquer Cômodo
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_armarios" value="1">
+                                        Na Cozinha
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_armarios" value="2">
+                                        Nos Quartos
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="checkbox" name="pesq_armarios" value="3">
+                                        Nos Banheiros
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 p-1 position-relative grupoOpcaoBusca h-auto" title="Selecione a quantidade mínima de vagas de garagem que o imóvel deve ter.">
+                            <div>
+                                <div data-titulo="Garagens" class="botaoOpcaoBuscaImovel w-100" data-filtro="0" data-input="radio">
+                                    <label class="p-1 px-2">Garagens</label>
+                                    <p class="px-2">Selecione um valor:</p>
+                                </div>
+                            </div>
+                            <div class="d-none position-absolute selectOpcaoBuscaImovel bg-light border rounded border-secondary w-100 p-2">
+                                <input type="text" name="pesq_campo19" class="d-none form-control campoFiltrarSelect w-100 mb-2" placeholder="Filtrar">
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo19" value="0">
+                                        Indiferente
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo19" value="1">
+                                        1 Vaga ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo19" value="2">
+                                        2 Vagas ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo19" value="3">
+                                        3 Vagas ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo19" value="4">
+                                        4 Vagas ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo19" value="5">
+                                        5 Vagas ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo19" value="6">
+                                        6 Vagas ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo19" value="7">
+                                        7 Vagas ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo19" value="8">
+                                        8 Vagas ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo19" value="9">
+                                        9 Vagas ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo19" value="10">
+                                        10 Vagas ou mais
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo19" value="11">
+                                        11 Vagas ou mais
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 p-1 position-relative grupoOpcaoBusca h-auto" title="Informe se é necessário que o imóvel tenha elevador.">
+                            <div>
+                                <div data-titulo="Elevadores" class="botaoOpcaoBuscaImovel w-100" data-filtro="0" data-input="radio">
+                                    <label class="p-1 px-2">Elevadores</label>
+                                    <p class="px-2">Selecione um valor:</p>
+                                </div>
+                            </div>
+                            <div class="d-none position-absolute selectOpcaoBuscaImovel bg-light border rounded border-secondary w-100 p-2">
+                                <input type="text" name="pesq_campo17" class="d-none form-control campoFiltrarSelect w-100 mb-2" placeholder="Filtrar">
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo17" value="-1" checked>
+                                        Indiferente
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo17" value="1">
+                                        Com Elevador
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo17" value="2">
+                                        Sem Elevador
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 p-1 position-relative grupoOpcaoBusca h-auto" title="Informe se o imóvel pode ter área privativa.">
+                            <div>
+                                <div data-titulo="Área privativa" class="botaoOpcaoBuscaImovel w-100" data-filtro="0" data-input="radio">
+                                    <label class="p-1 px-2">Área privativa</label>
+                                    <p class="px-2">Selecione um valor:</p>
+                                </div>
+                            </div>
+                            <div class="d-none position-absolute selectOpcaoBuscaImovel bg-light border rounded border-secondary w-100 p-2">
+                                <input type="text" name="pesq_campo16" class="d-none form-control campoFiltrarSelect w-100 mb-2" placeholder="Filtrar">
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo16" value="-1" checked>
+                                        Indiferente
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo16" value="1">
+                                        Com Area Privativa
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo16" value="2">
+                                        Sem Area Privativa
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 p-1 position-relative grupoOpcaoBusca h-auto" title="Informe se o imóvel deve ter área de lazer">
+                            <div>
+                                <div data-titulo="Área de lazer" class="botaoOpcaoBuscaImovel w-100" data-filtro="0" data-input="radio">
+                                    <label class="p-1 px-2">Área de lazer</label>
+                                    <p class="px-2">Selecione um valor:</p>
+                                </div>
+                            </div>
+                            <div class="d-none position-absolute selectOpcaoBuscaImovel bg-light border rounded border-secondary w-100 p-2">
+                                <input type="text" name="pesq_campo23" class="d-none form-control campoFiltrarSelect w-100 mb-2" placeholder="Filtrar">
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo23" value="-1" checked>
+                                        Indiferente
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo23" value="1">
+                                        Com Area de Lazer
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo23" value="2">
+                                        Sem Area de Lazer
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 p-1 position-relative grupoOpcaoBusca h-auto" title="Informe se o imóvel deve ter Salão de festas">
+                            <div>
+                                <div data-titulo="Salão de festas" class="botaoOpcaoBuscaImovel w-100" data-filtro="0" data-input="radio">
+                                    <label class="p-1 px-2">Salão de festas</label>
+                                    <p class="px-2">Selecione um valor:</p>
+                                </div>
+                            </div>
+                            <div class="d-none position-absolute selectOpcaoBuscaImovel bg-light border rounded border-secondary w-100 p-2">
+                                <input type="text" name="pesq_campo24" class="d-none form-control campoFiltrarSelect w-100 mb-2" placeholder="Filtrar">
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo24" value="-1" checked>
+                                        Indiferente
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo24" value="1">
+                                        Com Salão de Festas
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo24" value="2">
+                                        Sem Salão de Festas
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 p-1 position-relative grupoOpcaoBusca h-auto" title="Informe se o imóvel deve ter Piscina">
+                            <div>
+                                <div data-titulo="Piscina" class="botaoOpcaoBuscaImovel w-100" data-filtro="0" data-input="radio">
+                                    <label class="p-1 px-2">Piscina</label>
+                                    <p class="px-2">Selecione um valor:</p>
+                                </div>
+                            </div>
+                            <div class="d-none position-absolute selectOpcaoBuscaImovel bg-light border rounded border-secondary w-100 p-2">
+                                <input type="text" name="pesq_campo25" class="d-none form-control campoFiltrarSelect w-100 mb-2" placeholder="Filtrar">
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo25" value="-1" checked>
+                                        Indiferente
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo25" value="1">
+                                        Com Piscina
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo25" value="2">
+                                        Sem Piscina
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 p-1 position-relative grupoOpcaoBusca h-auto" title="Informe se o imóvel deve ter Churrasqueira">
+                            <div>
+                                <div data-titulo="Churrasqueira" class="botaoOpcaoBuscaImovel w-100" data-filtro="0" data-input="radio">
+                                    <label class="p-1 px-2">Churrasqueira</label>
+                                    <p class="px-2">Selecione um valor:</p>
+                                </div>
+                            </div>
+                            <div class="d-none position-absolute selectOpcaoBuscaImovel bg-light border rounded border-secondary w-100 p-2">
+                                <input type="text" name="pesq_campo26" class="d-none form-control campoFiltrarSelect w-100 mb-2" placeholder="Filtrar">
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo26" value="-1" checked>
+                                        Indiferente
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo26" value="1">
+                                        Com Churrasqueira
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo26" value="2">
+                                        Sem Churrasqueira
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 p-1 position-relative grupoOpcaoBusca h-auto" title="Informe se é necessário que o imóvel tenha porteiro físico.">
+                            <div>
+                                <div data-titulo="Porteiro físico" class="botaoOpcaoBuscaImovel w-100" data-filtro="0" data-input="radio">
+                                    <label class="p-1 px-2">Porteiro físico</label>
+                                    <p class="px-2">Selecione um valor:</p>
+                                </div>
+                            </div>
+                            <div class="d-none position-absolute selectOpcaoBuscaImovel bg-light border rounded border-secondary w-100 p-2">
+                                <input type="text" name="pesq_campo20" class="d-none form-control campoFiltrarSelect w-100 mb-2" placeholder="Filtrar">
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo20" value="-1" checked>
+                                        Indiferente
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo20" value="1">
+                                        Com Porteiro
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo20" value="2">
+                                        Sem Porteiro
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 p-1 position-relative grupoOpcaoBusca h-auto" title="Informe se o cliente deseja que o imóvel tenha Portão elétrico">
+                            <div>
+                                <div data-titulo="Portão elétrico" class="botaoOpcaoBuscaImovel w-100" data-filtro="0" data-input="radio">
+                                    <label class="p-1 px-2">Portão elétrico</label>
+                                    <p class="px-2">Selecione um valor:</p>
+                                </div>
+                            </div>
+                            <div class="d-none position-absolute selectOpcaoBuscaImovel bg-light border rounded border-secondary w-100 p-2">
+                                <input type="text" name="pesq_campo22" class="d-none form-control campoFiltrarSelect w-100 mb-2" placeholder="Filtrar">
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo22" value="-1" checked>
+                                        Indiferente
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo22" value="1">
+                                        Com Portão Elétrico
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label labelOptionFormCheck">
+                                        <input class="form-check-input optionformCheck" type="radio" name="pesq_campo22" value="2">
+                                        Sem Portão Elétrico
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-100 mb-3 d-flex justify-content-center">
+                    <button type='button' class="btn btn-lg btn-success me-1" onclick="location.href='/Pesquisa_aluguel/pesquisar'">
+                        <span class="material-icons">search</span>
+                        Buscar
+                    </button>
+                    <button type='button' class="btn btn-lg btn-danger ms-1 confirmarLimparPesquisa">
+                        <span class="material-icons">clear</span>
+                        Limpar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div> <!-- tela carregando -->
+    <div class="mensagemCarregando">
+        <div class="fundoBloqueado"></div>
+        <div class="conteudoMensagem">
+            <div class='text-center'>
+                <h5 id='mensagemCarregandoTitulo'>Processando...</h5>
+            </div>
+            <div class='text-center' id='mensagemCarregandoTexto'>A solicitação está sendo processada. Por favor aguarde...</div>
+            <div class='text-center iconeCarregando'>
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+        crossorigin="anonymous"></script>
+</body>
+<script>
+    tempoLogofSegundos = 300000;
+</script>
+</html>

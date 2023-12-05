@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Novos usuarios</title>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"
+        integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+
+    <script type="text/javascript">
+    </script>
+
+    <style>
+        /*avisos navbar (não mandar o comentario no wpp)*/
+
+        .navbar-avisos a {
+            color: rgba(255, 255, 255, .55) !important;
+        }
+
+        .navbar-avisos a:hover {
+            color: rgba(255, 255, 255, .75) !important;
+        }
+
+        .conteudo-compromisso {
+            height: 300px;
+            padding: 5px 0px 0px 0px;
+            position: relative;
+            width: 100%;
+        }
+
+        .conteudo-compromisso .remetente-compromisso {
+            height: 30% !important;
+            overflow-y: auto;
+        }
+
+        .conteudo-compromisso .corpo-compromisso {
+            height: 55% !important;
+            overflow-y: auto;
+        }
+
+        .conteudo-compromisso .botoes-compromisso {
+            height: 15% !important;
+            overflow-y: auto;
+        }
+
+        .conteudo-compromisso .icone-compromisso {
+            position: absolute;
+            top: 58px;
+            right: 15px;
+        }
+
+        html ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        html ::-webkit-scrollbar-thumb {
+            border-radius: 3px;
+            background: #115ba5;
+        }
+
+        html ::-webkit-scrollbar-track {
+            background: #ededed00;
+        }
+    </style>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary fixed cabecalho">
+        <div class="container-fluid">
+            <div class="me-2">
+                <a href="/">
+                    <img width="35px" height="30px"
+                        src="data:image/png;base64,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ZDItNDEwZC05MjkxLTBlN2YyZGU3NDI4MCIKICAgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpiNTEzY2I1Yy00ZTU5LTRiMzItYWU1NC04YzFjMjJjY2U2MzQiCiAgIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpkMmE3NjQ5NS02ZDk3LTQ4ODEtYmRkNS03NjAzM2NlODBmMDIiCiAgIGRjOkZvcm1hdD0iaW1hZ2UvcG5nIgogICBHSU1QOkFQST0iMi4wIgogICBHSU1QOlBsYXRmb3JtPSJXaW5kb3dzIgogICBHSU1QOlRpbWVTdGFtcD0iMTY3NzQ5OTMxNjk0NjgyNyIKICAgR0lNUDpWZXJzaW9uPSIyLjEwLjMyIgogICB0aWZmOk9yaWVudGF0aW9uPSIxIgogICB4bXA6Q3JlYXRvclRvb2w9IkdJTVAgMi4xMCIKICAgeG1wOk1ldGFkYXRhRGF0ZT0iMjAyMzowMjoyN1QwOTowMTo0OS0wMzowMCIKICAgeG1wOk1vZGlmeURhdGU9IjIwMjM6MDI6MjdUMDk6MDE6NDktMDM6MDAiPgogICA8eG1wTU06SGlzdG9yeT4KICAgIDxyZGY6U2VxPgogICAgIDxyZGY6bGkKICAgICAgc3RFdnQ6YWN0aW9uPSJzYXZlZCIKICAgICAgc3RFdnQ6Y2hhbmdlZD0iLyIKICAgICAgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDo3MWM5NjEyZi1hZDg2LTQ4OGYtOTE4Yy1iZjg2ZWZkZTkwMTciCiAgICAgIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkdpbXAgMi4xMCAoV2luZG93cykiCiAgICAgIHN0RXZ0OndoZW49IjIwMjMtMDItMjdUMDk6MDE6NTYiLz4KICAgIDwvcmRmOlNlcT4KICAgPC94bXBNTTpIaXN0b3J5PgogIDwvcmRmOkRlc2NyaXB0aW9uPgogPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg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AKIWAABELQAAohYAAEQtAACIWgAAELUAAIhaAAAQtQAAIGoBAEDUAgAgagEAQNQCAICoBQAAUQsAgKgFAABRCwAAohYAAEQtAACiFgAARC0AAIhaAAAQtQAAiFoAABC1AAAgagEAQNQCACBqAQBA1AIAgKgFAABRCwCAqAUAAFELAACiFgAARC0AAKIWAABELQAAiFoAABC1AACIWgAAELUAACBqAQBA1AIAIGoBAEDUAgCAqAUAAFELAICoBQAAUQsAAKIWAABELQAAohYAAEQtAACIWgAAELUAAIhaAAAQtQAAIGoBAEDUAgAgagEAQNQCAICoBQAAUQsAgKgFAABRCwAAohYAAEQtAACiFgAARC0AAIhaAAAQtQAAiFoAABC1AAAgagEAQNQCACBqAQBA1AIAgKgFAABRCwCAqAUAAFELAACiFgAARC0AAKIWAABELQAAiFoAABC1AACIWgAAELUAACBqAQBA1AIAIGoBAEDUAgCAqAUAQNR6BAAAiFoAABC1AAAgagEAELUAACBqAQBA1AIAgKgFAEDUAgCAqAUAAFELAACiFgAAUQsAAKIWAABELQAAiFoAAEQtAACIWgAAELUAACBqAQAQtQAAIGoBAEDUAgCAqAUAQNQCAICoBQAAUQsAAKIWAABRCwAAohYAAEQtAACIWgAARC0AAIhaAAAQtQAAIGoBABC1AAAgagEAQNQCAICoBQBA1AIAgKgFAABRCwAAohYAAFELAACiFgAARC0AAIhaAABELQAAiFoAABC1AAAgagEAELUAACBqAQBA1AIAgKgFAEDUAgCAqAUAAFELAACiFgAAUQsAAKIWAABELQAAiFoAAEQtAADsbjyfz6fHAABAMt/UAgAQbzwej4dvawEAiA3aMcb49/8QtgAAJAbt4/HxTa2wBQAgNWj/F7XCFgCAtKD9NGqFLQAASUH7x6gVtgAApATtX6NW2AIAkBC0X0atsAUAYPegfSlqhS0AADsH7ePx4r9R7JX/IAAAWBa+3/l/9o0tAAC3xuqLX65++xtYYQsAwE5B+1bUClsAAHYK2rejVtgCALBL0B6KWmELAMAOQXs4aoUtAACrg/aUqBW2AACsDNrTolbYAgCwKmhPjVphCwDAiqA9PWqFLQAAdwftJVErbAEAuDNoL4taYQsAwF1Be2nUClsAAO4I2sujVtgCAHB1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">
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="main_nav">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Arquivo</a>
+                        <ul class="dropdown-menu">
+                            <li title="Cadastro de pessoas no sistema (CTRL+F2)">
+                                <a class="dropdown-item atalho" data-atalho="CTRL+F2" href="/pessoa/formularios">Pessoa</a>
+                                <i class="material-icons icone">person</i>
+                            </li>
+                            <li title="Cadastro de imóveis no sistema (CTRL+I)">
+                                <a class="dropdown-item atalho" data-atalho="CTRL+I" href="/imovel/show">Imóvel</a>
+                                <i class="material-icons icone">home</i>
+                            </li>
+                            <li title="Cadastro de Contratos de Locação (CTRL+F3)">
+                                <a class="dropdown-item atalho" data-atalho="CTRL+F3" href="/contrato/show">Contrato</a>
+                                <i class="material-icons icone">description</i>
+                            </li>
+                            <li title="Cadastro de Caixas e Bancos (CTRL+F4)">
+                                <a class="dropdown-item atalho" data-atalho="CTRL+F4" href="/caixa/show">Caixas e Bancos</a>
+                                <i class="material-icons icone">paid</i>
+                            </li>
+                            <li title="Tabelas complementares do sistema">
+                                <a class="dropdown-item" href="">Tabelas</a>
+                                <i class="material-icons icone">table_rows</i>
+                                <i class="material-icons seta">play_arrow</i>
+                                <ul class="submenu dropdown-menu">
+                                    <li title="Cadastro de motivos de rescisão do locatário (CTRL+M)">
+                                        <a class="dropdown-item atalho" data-atalho="CTRL+M" href="/motivo_rescisao/show">Motivos de Rescisão</a>
+                                        <i class="material-icons icone">west</i>
+                                    </li>
+                                    <li title="Cadastro de tabelas do Imposto de Renda (CTRL+R)">
+                                        <a class="dropdown-item atalho" data-atalho="CTRL+R" href="/irrf/show">Imposto de Renda</a>
+                                        <i class="material-icons icone">money</i>
+                                    </li>
+                                    <li title="Cadastro de instituições bancárias (CTRL+ALT+B)">
+                                        <a class="dropdown-item atalho" data-atalho="CTRL+ALT+B" href="/banco/show">Instituição Bancária</a>
+                                        <i class="material-icons icone">account_balance</i>
+                                    </li>
+                                    <li title="Cadastro de planos de comissão no sistema">
+                                        <a class="dropdown-item" href="/plano_comissao/show">Planos de comissão</a>
+                                        <i class="material-icons icone">format_list_bulleted</i>
+                                    </li>
+                                    <li title="Cadastro de históricos para lançamentos financeiros">
+                                        <a class="dropdown-item" href="/historico_padrao/show">Histórico Padrão</a>
+                                        <i class="material-icons icone">manage_search</i>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Operações Financeiras</a>
+                        <ul class="dropdown-menu">
+                            <li title="Lançamentos financeiros no sistema ()">
+                                <a class="dropdown-item atalho" data-atalho="" href="">Lançamentos</a>
+                                <i class="material-icons icone">toc</i>
+                                <i class="material-icons seta">play_arrow</i>
+                                <ul class="submenu dropdown-menu">
+                                    <li title="Lançamentos ao inquilino (CTRL+I)">
+                                        <a class="dropdown-item atalho" data-atalho="CTRL+I" href="/lancamento/inquilino">Inquilinos</a>
+                                        <i class="material-icons icone">people</i>
+                                    </li>
+                                    <li title="Lançamentos ao proprietário (CTR+ALTL+P)">
+                                        <a class="dropdown-item atalho" data-atalho="CTR+ALTL+P" href="/lancamento/proprietario">Proprietários</a>
+                                        <i class="material-icons icone">person</i>
+                                    </li>
+                                    <li title="Lançamentos à imobiliária (CTRL+ALT+I)">
+                                        <a class="dropdown-item atalho" data-atalho="CTRL+ALT+I" href="/lancamento/imobiliaria">Imobiliária</a>
+                                        <i class="material-icons icone">corporate_fare</i>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li title="Pagamentos ao proprietário do imóvel (CTRL+ALT+P)">
+                                <a class="dropdown-item atalho" data-atalho="CTRL+ALT+P" href="">Pagamento ao Proprietário</a>
+                                <i class="material-icons icone">request_quote</i>
+                                <i class="material-icons seta">play_arrow</i>
+                                <ul class="submenu dropdown-menu">
+                                    <li title="Pagamento ao proprietário via transferência bancária ou pix (CTRL+ALT+B)">
+                                        <a class="dropdown-item atalho" data-atalho="CTRL+ALT+B" href="/pagamento_proprietario/banco">Via banco</a>
+                                        <i class="material-icons icone">account_balance</i>
+                                    </li>
+                                    <li title="Pagamento de proprietário em caixa, com cheque ou dinheiro. (CTRL+ALT+C)">
+                                        <a class="dropdown-item atalho" data-atalho="CTRL+ALT+C" href="/pagamento_proprietario/caixa">Em caixa</a>
+                                        <i class="material-icons icone">local_atm</i>
+                                    </li>
+                                    <li title="Gerar o arquivo de remessa de pagamento para envio ao banco (CTRL+ALT+R)">
+                                        <a class="dropdown-item atalho" data-atalho="CTRL+ALT+R" href="/pagamento_proprietario/remessa">Enviar remessa</a>
+                                        <i class="material-icons icone">file_upload</i>
+                                    </li>
+                                    <li title="Processa o arquivo de retorno de pagamento ao proprietário baixado do site do banco (CTRL+ALT+R)">
+                                        <a class="dropdown-item atalho" data-atalho="CTRL+ALT+R" href="/pagamento_proprietario/retorno">Processar retorno</a>
+                                        <i class="material-icons icone">download</i>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li title="Operações com recibos do locatário ( )">
+                                <a class="dropdown-item atalho" data-atalho="" href="">Recibos do Locatário</a>
+                                <i class="material-icons icone">receipt</i>
+                                <i class="material-icons seta">play_arrow</i>
+                                <ul class="submenu dropdown-menu">
+                                    <li title="Gerar um recibo individual para o locatário (CTRL+SHIF+I)">
+                                        <a class="dropdown-item atalho" data-atalho="CTRL+SHIF+I" href="/recibo/individual">Gerar recibo individual</a>
+                                        <i class="material-icons icone">article</i>
+                                    </li>
+                                    <li title="Gerar recibos para um período especificado (CTRL+SHIF+G)">
+                                        <a class="dropdown-item atalho" data-atalho="CTRL+SHIF+G" href="/recibo/geral">Gerar recibo geral</a>
+                                        <i class="material-icons icone">post_add</i>
+                                    </li>
+                                    <li title="Cancela um recibo de forma individual (CTRL+SHIF+C)">
+                                        <a class="dropdown-item atalho" data-atalho="CTRL+SHIF+C" href="/recibo/cancelar">Cancelar Recibo</a>
+                                        <i class="material-icons icone">insert_page_break</i>
+                                    </li>
+                                    <li title="Quita um recibo de forma individual (CTRL+SHIF+Q)">
+                                        <a class="dropdown-item atalho" data-atalho="CTRL+SHIF+Q" href="/recibo/quitar">Quitar Recibo</a>
+                                        <i class="material-icons icone">paid</i>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li title="Processamento de boletos bancários ( )">
+                                <a class="dropdown-item atalho" data-atalho="" href="">Cobrança Bancária </a>
+                                <i class="material-icons icone">account_balance</i>
+                                <i class="material-icons seta">play_arrow</i>
+                                <ul class="submenu dropdown-menu">
+                                    <li title="Geração de boletos bancários (CTRL+SHIFT+G)">
+                                        <a class="dropdown-item atalho" data-atalho="CTRL+SHIFT+G" href="/boleto/gerar">Gerar Boletos</a>
+                                        <i class="material-icons icone">description</i>
+                                    </li>
+                                    <li title="Geração do arquivo de remessa para envio ao banco (CTRL+SHIFT+R)">
+                                        <a class="dropdown-item atalho" data-atalho="CTRL+SHIFT+R" href="/boleto/remessa">Gerar remessa</a>
+                                        <i class="material-icons icone">file_upload</i>
+                                    </li>
+                                    <li title="Processar o arquivo de retorno do banco (CTRL+SHIFT+T)">
+                                        <a class="dropdown-item atalho" data-atalho="CTRL+SHIFT+T" href="/boleto/retorno">Processar retorno</a>
+                                        <i class="material-icons icone">download</i>
+                                    </li>
+                                    <li title="Relatório de cobrança bancária (CTRL+SHIFT+C)">
+                                        <a class="dropdown-item atalho" data-atalho="CTRL+SHIFT+C" href="/boleto/relatorio">Relatório de cobrança</a>
+                                        <i class="material-icons icone">text_snippet</i>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Exibir</a>
+                        <ul class="dropdown-menu"></ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Relatórios</a>
+                        <ul class="dropdown-menu"></ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Estatísticas</a>
+                        <ul class="dropdown-menu"></ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Configurações</a>
+                        <ul class="dropdown-menu">
+                            <li title="Configurações de controle de acesso ao sistema ( )">
+                                <a class="dropdown-item atalho" data-atalho="" href="">Controle de acesso</a>
+                                <i class="material-icons icone">manage_accounts</i>
+                                <i class="material-icons seta">play_arrow</i>
+                                <ul class="submenu dropdown-menu">
+                                    <li title="Cadastro de usuários no sistema (CTRL+SHIFT+U)">
+                                        <a class="dropdown-item atalho" data-atalho="CTRL+SHIFT+U" href="/usuario/show">Usuários</a>
+                                        <i class="material-icons icone">person</i>
+                                    </li>
+                                    <li title="Cadastro de grupos usuários no sistema (CTRL+SHIFT+G)">
+                                        <a class="dropdown-item atalho" data-atalho="CTRL+SHIFT+G" href="/grupo/show">Grupos de Usuários</a>
+                                        <i class="material-icons icone">group</i>
+                                    </li>
+                                    <li title="Configurações do menu do sistema (CTRL+SHIFT+M)">
+                                        <a class="dropdown-item atalho" data-atalho="CTRL+SHIFT+M" href="/menu/show">Menu</a>
+                                        <i class="material-icons icone">menu</i>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li title="Cadastra os tipos de imóveis no sistema para uso em pesquisa e exibição.(CTRL+SHIFT+N)">
+                                <a class="dropdown-item atalho" data-atalho="CTRL+SHIFT+N" href="/imovel_tipo/show">Tipos de imóvel</a>
+                                <i class="material-icons icone">home</i>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="navbar-avisos d-flex ms-auto mb-0" style="list-style: none;">
+                    <li class="nav-item d-flex align-items-center px-1" style="cursor:pointer">
+                        <a class="nav-link p-1 d-flex align-items-center" href="#">
+                            <span class="material-icons my-0 mx-1">warning</span>
+                        </a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center px-1" style="cursor:pointer">
+                        <a class="nav-link p-1 d-flex align-items-center" href="#">
+                            <span class="material-icons my-0 mx-1">ring_volume</span>
+                        </a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center px-1" style="cursor:pointer">
+                        <a class="nav-link p-1 d-flex align-items-center" href="#">
+                            <span class="material-icons my-0 mx-1">mail</span>
+                            0/10
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#"
+                            data-bs-toggle="dropdown">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;admin</a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li title="Alterar senha do usuário">
+                                <a class="dropdown-item atalho" href="/usuario/alterar_senha">Alterar Senha</a>
+                                <i class="material-icons icone">lock_person</i>
+                            </li>
+                            <li title="Cadastro de pessoas no sistema (CTRL+F2)">
+                                <a class="dropdown-item atalho" data-atalho="CTRL+F2" href="/usuario/agenda">Agenda</a>
+                                <i class="material-icons icone">event</i>
+                            </li>
+                            <li title="Cadastro de pessoas no sistema (CTRL+F2)">
+                                <a class="dropdown-item atalho" data-atalho="CTRL+F2" href="/usuario/agenda">Tarefas urgentes</a>
+                                <i class="material-icons icone">task</i>
+                            </li>
+                            <li title="Cadastro de pessoas no sistema (CTRL+F2)">
+                                <a class="dropdown-item atalho" data-atalho="CTRL+X" href="?sair=1">Sair</a>
+                                <i class="material-icons icone">close</i>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <form class="cadastro_pessoa">
+            <div class="row mx-1">
+                <div class="col-12">
+                    <div class="mt-5 d-flex justify-content-between align-items-center">
+                        <h1>Tela de compromissos</h1>
+                        <button class="btn btn-primary d-flex align-items-center justify-content-center">
+                            <span class="material-icons text-white me-1">arrow_back</span>
+                            Voltar
+                        </button>
+                    </div>
+                    <hr>
+                    <div class="conteudo-nao-visto">
+                        <h3 class="mt-3 mb-3">Não vistos (10)</h3>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6 col-xl-4 p-2">
+                                <div class="conteudo-compromisso border border-primary rounded">
+                                    <div class="remetente-compromisso py-1 px-3 pe-4">
+                                        <div class="">
+                                            <h5 class="m-0">De: Vitor Ribeiro Nunes</h5>
+                                        </div>
+                                        <div class="d-flex align-content-center mt-1">
+                                            <h6 class="mb-0 d-flex align-items-center m-0">Enviado:&nbsp;</h6>
+                                            <span class="material-icons mb-0 me-1">calendar_month</span>
+                                            <h6 class="m-0 d-flex align-items-center">20.03.2023 04:50</h6>
+                                        </div>
+                                        <div class="d-flex align-content-center mt-1">
+                                            <h6 class="mb-0 d-flex align-items-center m-0">Visto:&nbsp;</h6>
+                                            <span class="material-icons mb-0 me-1">calendar_month</span>
+                                            <h6 class="m-0 d-flex align-items-center">20.03.2023 04:51</h6>
+                                        </div>
+                                    </div>
+                                    <div class="corpo-compromisso p-2">
+                                        <p class="m-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi fuga
+                                            autem molestiae ex quasi hic quibusdam unde ipsam explicabo, exercitationem
+                                            maiores inventore itaque recusandae est repellat expedita nobis aliquam eos?
+                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugiat id
+                                            voluptatum, distinctio laboriosam tenetur delectus sequi molestiae
+                                            provident. Consectetur totam placeat quo rerum blanditiis neque hic, natus
+                                            possimus molestiae facere?
+                                        </p>
+                                    </div>
+                                    <div class="botoes-compromisso d-flex p-1 w-100">
+                                        <button class="btn btn-primary w-50 h-100 d-flex align-items-center justify-content-center mx-1">
+                                            <span class="material-icons p-0">send</span>
+                                            Responder
+                                        </button>
+                                        <button class="btn btn-success w-auto h-100 d-flex align-items-center mx-1">
+                                            <span class="material-icons p-0">done</span>
+                                            Concluido
+                                        </button>
+                                        <button class="btn btn-secondary w-auto h-100 d-flex align-items-center mx-1">
+                                            <span class="material-icons p-0">description</span>
+                                            Anexo
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-xl-4 p-2">
+                                <div class="conteudo-compromisso border border-primary rounded">
+                                    <div class="remetente-compromisso py-1 px-3 pe-4">
+                                        <div class="">
+                                            <h5 class="m-0">De: Vitor Ribeiro Nunes</h5>
+                                        </div>
+                                        <div class="d-flex align-content-center mt-1">
+                                            <h6 class="mb-0 d-flex align-items-center m-0">Enviado:&nbsp;</h6>
+                                            <span class="material-icons mb-0 me-1">calendar_month</span>
+                                            <h6 class="m-0 d-flex align-items-center">20.03.2023 04:50</h6>
+                                        </div>
+                                        <div class="d-flex align-content-center mt-1">
+                                            <h6 class="mb-0 d-flex align-items-center m-0">Visto:&nbsp;</h6>
+                                            <span class="material-icons mb-0 me-1">calendar_month</span>
+                                            <h6 class="m-0 d-flex align-items-center">20.03.2023 04:51</h6>
+                                        </div>
+                                    </div>
+                                    <div class="corpo-compromisso p-2">
+                                        <p class="m-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi fuga
+                                            autem molestiae ex quasi hic quibusdam unde ipsam explicabo, exercitationem
+                                            maiores inventore itaque recusandae est repellat expedita nobis aliquam eos?
+                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugiat id
+                                            voluptatum, distinctio laboriosam tenetur delectus sequi molestiae
+                                            provident. Consectetur totam placeat quo rerum blanditiis neque hic, natus
+                                            possimus molestiae facere?
+                                        </p>
+                                    </div>
+                                    <div class="botoes-compromisso d-flex p-1 w-100">
+                                        <button class="btn btn-primary w-50 h-100 d-flex align-items-center justify-content-center mx-1">
+                                            <span class="material-icons p-0">send</span>
+                                            Responder
+                                        </button>
+                                        <button class="btn btn-success w-auto h-100 d-flex align-items-center mx-1">
+                                            <span class="material-icons p-0">done</span>
+                                            Concluido
+                                        </button>
+                                        <button class="btn btn-secondary w-auto h-100 d-flex align-items-center mx-1">
+                                            <span class="material-icons p-0">description</span>
+                                            Anexo
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-xl-4 p-2">
+                                <div class="conteudo-compromisso border border-primary rounded">
+                                    <div class="remetente-compromisso py-1 px-3 pe-4">
+                                        <div class="">
+                                            <h5 class="m-0">De: Vitor Ribeiro Nunes</h5>
+                                        </div>
+                                        <div class="d-flex align-content-center mt-1">
+                                            <h6 class="mb-0 d-flex align-items-center m-0">Enviado:&nbsp;</h6>
+                                            <span class="material-icons mb-0 me-1">calendar_month</span>
+                                            <h6 class="m-0 d-flex align-items-center">20.03.2023 04:50</h6>
+                                        </div>
+                                        <div class="d-flex align-content-center mt-1">
+                                            <h6 class="mb-0 d-flex align-items-center m-0">Visto:&nbsp;</h6>
+                                            <span class="material-icons mb-0 me-1">calendar_month</span>
+                                            <h6 class="m-0 d-flex align-items-center">20.03.2023 04:51</h6>
+                                        </div>
+                                    </div>
+                                    <div class="corpo-compromisso p-2">
+                                        <p class="m-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi fuga
+                                            autem molestiae ex quasi hic quibusdam unde ipsam explicabo, exercitationem
+                                            maiores inventore itaque recusandae est repellat expedita nobis aliquam eos?
+                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugiat id
+                                            voluptatum, distinctio laboriosam tenetur delectus sequi molestiae
+                                            provident. Consectetur totam placeat quo rerum blanditiis neque hic, natus
+                                            possimus molestiae facere?
+                                        </p>
+                                    </div>
+                                    <div class="botoes-compromisso d-flex p-1 w-100">
+                                        <button class="btn btn-primary w-50 h-100 d-flex align-items-center justify-content-center mx-1">
+                                            <span class="material-icons p-0">send</span>
+                                            Responder
+                                        </button>
+                                        <button class="btn btn-success w-auto h-100 d-flex align-items-center mx-1">
+                                            <span class="material-icons p-0">done</span>
+                                            Concluido
+                                        </button>
+                                        <button class="btn btn-secondary w-auto h-100 d-flex align-items-center mx-1">
+                                            <span class="material-icons p-0">description</span>
+                                            Anexo
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="conteudo-visto">
+                        <h3 class="mt-3 mb-3">Vistos (1)</h3>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6 col-xl-4 p-2">
+                                <div class="conteudo-compromisso border border-primary rounded">
+                                    <div class="remetente-compromisso py-1 px-3 pe-4">
+                                        <div class="">
+                                            <h5 class="m-0">De: Vitor Ribeiro Nunes</h5>
+                                        </div>
+                                        <div class="d-flex align-content-center mt-1">
+                                            <h6 class="mb-0 d-flex align-items-center m-0">Enviado:&nbsp;</h6>
+                                            <span class="material-icons mb-0 me-1">calendar_month</span>
+                                            <h6 class="m-0 d-flex align-items-center">20.03.2023 04:50</h6>
+                                        </div>
+                                        <div class="d-flex align-content-center mt-1">
+                                            <h6 class="mb-0 d-flex align-items-center m-0">Visto:&nbsp;</h6>
+                                            <span class="material-icons mb-0 me-1">calendar_month</span>
+                                            <h6 class="m-0 d-flex align-items-center">20.03.2023 04:51</h6>
+                                        </div>
+                                    </div>
+                                    <div class="corpo-compromisso p-2">
+                                        <p class="m-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi fuga
+                                            autem molestiae ex quasi hic quibusdam unde ipsam explicabo, exercitationem
+                                            maiores inventore itaque recusandae est repellat expedita nobis aliquam eos?
+                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugiat id
+                                            voluptatum, distinctio laboriosam tenetur delectus sequi molestiae
+                                            provident. Consectetur totam placeat quo rerum blanditiis neque hic, natus
+                                            possimus molestiae facere?
+                                        </p>
+                                    </div>
+                                    <div class="botoes-compromisso d-flex p-1 w-100">
+                                        <button class="btn btn-primary w-50 h-100 d-flex align-items-center justify-content-center mx-1">
+                                            <span class="material-icons p-0">send</span>
+                                            Responder
+                                        </button>
+                                        <button class="btn btn-success w-auto h-100 d-flex align-items-center mx-1">
+                                            <span class="material-icons p-0">done</span>
+                                            Concluido
+                                        </button>
+                                        <button class="btn btn-secondary w-auto h-100 d-flex align-items-center mx-1">
+                                            <span class="material-icons p-0">description</span>
+                                            Anexo
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-xl-4 p-2">
+                                <div class="conteudo-compromisso border border-primary rounded">
+                                    <div class="remetente-compromisso py-1 px-3 pe-4">
+                                        <div class="">
+                                            <h5 class="m-0">De: Vitor Ribeiro Nunes</h5>
+                                        </div>
+                                        <div class="d-flex align-content-center mt-1">
+                                            <h6 class="mb-0 d-flex align-items-center m-0">Enviado:&nbsp;</h6>
+                                            <span class="material-icons mb-0 me-1">calendar_month</span>
+                                            <h6 class="m-0 d-flex align-items-center">20.03.2023 04:50</h6>
+                                        </div>
+                                        <div class="d-flex align-content-center mt-1">
+                                            <h6 class="mb-0 d-flex align-items-center m-0">Visto:&nbsp;</h6>
+                                            <span class="material-icons mb-0 me-1">calendar_month</span>
+                                            <h6 class="m-0 d-flex align-items-center">20.03.2023 04:51</h6>
+                                        </div>
+                                    </div>
+                                    <div class="corpo-compromisso p-2">
+                                        <p class="m-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi fuga
+                                            autem molestiae ex quasi hic quibusdam unde ipsam explicabo, exercitationem
+                                            maiores inventore itaque recusandae est repellat expedita nobis aliquam eos?
+                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugiat id
+                                            voluptatum, distinctio laboriosam tenetur delectus sequi molestiae
+                                            provident. Consectetur totam placeat quo rerum blanditiis neque hic, natus
+                                            possimus molestiae facere?
+                                        </p>
+                                    </div>
+                                    <div class="botoes-compromisso d-flex p-1 w-100">
+                                        <button class="btn btn-primary w-50 h-100 d-flex align-items-center justify-content-center mx-1">
+                                            <span class="material-icons p-0">send</span>
+                                            Responder
+                                        </button>
+                                        <button class="btn btn-success w-auto h-100 d-flex align-items-center mx-1">
+                                            <span class="material-icons p-0">done</span>
+                                            Concluido
+                                        </button>
+                                        <button class="btn btn-secondary w-auto h-100 d-flex align-items-center mx-1">
+                                            <span class="material-icons p-0">description</span>
+                                            Anexo
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-xl-4 p-2">
+                                <div class="conteudo-compromisso border border-primary rounded">
+                                    <div class="remetente-compromisso py-1 px-3 pe-4">
+                                        <div class="">
+                                            <h5 class="m-0">De: Vitor Ribeiro Nunes</h5>
+                                        </div>
+                                        <div class="d-flex align-content-center mt-1">
+                                            <h6 class="mb-0 d-flex align-items-center m-0">Enviado:&nbsp;</h6>
+                                            <span class="material-icons mb-0 me-1">calendar_month</span>
+                                            <h6 class="m-0 d-flex align-items-center">20.03.2023 04:50</h6>
+                                        </div>
+                                        <div class="d-flex align-content-center mt-1">
+                                            <h6 class="mb-0 d-flex align-items-center m-0">Visto:&nbsp;</h6>
+                                            <span class="material-icons mb-0 me-1">calendar_month</span>
+                                            <h6 class="m-0 d-flex align-items-center">20.03.2023 04:51</h6>
+                                        </div>
+                                    </div>
+                                    <div class="corpo-compromisso p-2">
+                                        <p class="m-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi fuga
+                                            autem molestiae ex quasi hic quibusdam unde ipsam explicabo, exercitationem
+                                            maiores inventore itaque recusandae est repellat expedita nobis aliquam eos?
+                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugiat id
+                                            voluptatum, distinctio laboriosam tenetur delectus sequi molestiae
+                                            provident. Consectetur totam placeat quo rerum blanditiis neque hic, natus
+                                            possimus molestiae facere?
+                                        </p>
+                                    </div>
+                                    <div class="botoes-compromisso d-flex p-1 w-100">
+                                        <button class="btn btn-primary w-50 h-100 d-flex align-items-center justify-content-center mx-1">
+                                            <span class="material-icons p-0">send</span>
+                                            Responder
+                                        </button>
+                                        <button class="btn btn-success w-auto h-100 d-flex align-items-center mx-1">
+                                            <span class="material-icons p-0">done</span>
+                                            Concluido
+                                        </button>
+                                        <button class="btn btn-secondary w-auto h-100 d-flex align-items-center mx-1">
+                                            <span class="material-icons p-0">description</span>
+                                            Anexo
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

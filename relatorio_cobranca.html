@@ -1,0 +1,234 @@
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>CASA NOVA LOCADORA - Solução em Aluguel e Venda de Imóveis</title>
+    <link rel="icon" type="image/png" href="../public/img/icone-logo-casa-nova-aluguel-venda-divinopolis.png"
+        alt="Icone Logo Casa Nova Aluguel e Venda de Imóveis em Divinópolis">
+
+    <link rel="stylesheet" type="text/css" href="../public/vendor/fontawesome-5.10/css/all.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+
+<body>
+    <script>
+        $(document).ready(function () {
+            $(document).on('change', '.filtroTitulos', function () {
+                var titulo = parseInt($('#filtroTitulo').val());
+                var usuario = parseInt($('#filtroUsuario').val());
+                console.log(titulo + ' ' + usuario);
+                var ativar = null;
+                $('.selecionarMensagem').each(function () {
+                    var ocultar = false;
+                    if (titulo > -1) {
+                        if (parseInt($(this).attr('data-filtro-titulo')) != titulo) ocultar = true;
+                    }
+                    if (usuario > -1) {
+                        if (parseInt($(this).attr('data-filtro-usuario')) != usuario) ocultar = true;
+                    }
+                    if (ocultar) {
+                        $(this).addClass('d-none');
+                    } else {
+                        if (ativar == null) ativar = $(this);
+                        $(this).removeClass('d-none');
+                    }
+                });
+                ativar.trigger('click');
+            });
+            $(document).on('click', '.cobrancaCampoMais', function () {
+                var link = '?cod_loc=' + $(this).attr('data-cod_loc');
+                $.get(link, function (data) {
+                    var botoes = '<button type="button" id="btnGravarCampoMais" class="btn btn-outline-success"><i class="fas fa-save"></i> Gravar</button> ';
+                    botoes += '<button type="button" class="btn btn-outline-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Fechar</button> ';
+                    mensagemModal('Executar cobrança', data, botoes, 1, true, true);
+                });
+            });
+            $(document).on('click', '#btnGravarCampoMais', function () {
+                $('#botaoEnviarCampoMais').trigger('click');
+            });
+            $(document).on('submit', '#enviarCampoMais', function (e) {
+                e.preventDefault();
+                var formData = new FormData($('#enviarCampoMais')[0]);
+                $.ajax({
+                    method: 'POST',
+                    url: '?acao=enviarCampoMais',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response == 'ok') {
+                            mensagemModal('Gravado com sucesso', 'Informação do campo mais gravada com sucesso!');
+                        } else {
+                            mensagemModal('Erro ao gravar', 'Ocorreu um erro ao gravar no campo mais!');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        mensagemModal('Erro ao gravar', 'Ocorreu um erro ao gravar!', 'fechar', 1, true, true);
+                    },
+                });
+            });
+            $(document).on('input', '#retirar_cobranca', function () {
+                $('#dt_cobranca').prop('required', $(this).is(':checked'));
+            });
+            $(document).on('click', '.cobrancaWhatsApp', function () {
+                var link = '?whatsapp=' + $(this).attr('data-cod_loc') + '&mensagem=' + $(this).attr('data-mensagem');
+                $.get(link, function (data) {
+                    var botoes = '<button type="button" id="btnEnviarWhatsApp" class="btn btn-outline-success">Enviar</button> ';
+                    botoes += '<button type="button" class="btn btn-outline-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Fechar</button> ';
+                    mensagemModal('Enviar por whatsapp', data, botoes, 1, true, true);
+                });
+            });
+            $(document).on('click', '#btnEnviarWhatsApp', function () {
+                var telefone = $('#telefone_whatsapp').val();
+                var mensagem = $('#mensagem_whatsapp').val();
+                mensagem = encodeURI(mensagem);
+                var link = 'https://web.whatsapp.com/send/?phone=55' + telefone + '&text=' + mensagem + '&type=phone_number&app_absent=0';
+                window.open(link, 'whatsapp');
+                fecharModal();
+            });
+            $(document).on('click', '.pendenciasContrato', function () {
+                var cod_loc = $(this).attr('data-cod_loc');
+                var link = '?recibos=' + cod_loc;
+                $.get(link, function (data) {
+                    mensagemModal('Pendências do contrato', data, 'fechar', true, true);
+                });
+            });
+            $(document).on('click', '.consultaCampoMais', function () {
+                var link = '?historico=' + $(this).attr('data-cod_loc');
+                mensagemModalGrande('<h4 class="mb-0">Histórico de mensagens</h4>', '<h5>Carregando...</h5>', 'fechar', true, true);
+                $.get(link, function (data) {
+                    mensagemModalGrande('<h4 class="mb-0">Histórico de mensagens</h4>', data, 'fechar', true, true);
+                });
+            });
+            $(document).on('click', '.selecionarMensagem', function () {
+                $('.selecionarMensagem').removeClass('ativado');
+                $(this).addClass('ativado');
+                $('#txtAviso').html($(this).attr('data-txtAviso'));
+                $('#txtHistorico').val($(this).attr('data-txtHistorico'));
+            });
+        });
+    </script>
+    <style>
+        .conteudo .div_tabela_overflow .tabela_cliente .select_filtro_titulo {
+            background-color: #0d6efd !important;
+            color: white !important;
+        }
+
+        .conteudo .div_tabela_overflow .tabela_cliente .tabela_body .tabela_row.ativado {
+            background-color: #009;
+            color: white;
+        }
+
+        .conteudo .div_tabela_overflow .tabela_cliente .tabela_body .tabela_row.ativado :hover {
+            background-color: #009;
+            color: white;
+        }
+
+        .text_overflow {
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+        }
+
+        .conteudo .div_tabela_overflow .tabela_cliente .tabela_body {
+            margin-left: -15px !important;
+            margin-right: -15px !important;
+            border: 1px solid #eee;
+            height: 200px !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            border-bottom-right-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+
+        .tabela_cliente .tabela_head {
+            border-top-right-radius: 7px;
+            border-top-left-radius: 7px;
+            background-color: #0d6efd;
+        }
+
+        .tabela_cliente .tabela_body .tabela_row {
+            border-bottom: 1px solid #dadada;
+            border-left: 1px solid #dadada;
+            border-right: 1px solid #dadada;
+        }
+
+        .tabela_cliente .tabela_body .tabela_row:last-child {
+            border-bottom-right-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+
+        .sub_tabela_cliente .tabela_head {
+            border-top-right-radius: 7px;
+            border-top-left-radius: 7px;
+            background-color: #ececec;
+            color: black !important;
+            font-weight: bold;
+        }
+
+        .sub_tabela_cliente .tabela_body .tabela_row {
+            border-bottom: 1px solid #dadada;
+            border-left: 1px solid #dadada;
+            border-right: 1px solid #dadada;
+        }
+
+        .sub_tabela_cliente .tabela_body .tabela_row:last-child {
+            border-bottom-right-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+
+        .cursorPointer {
+            cursor: pointer !important;
+        }
+
+        .hover_cinza:hover {
+            background-color: #dcdbdb;
+        }
+    </style>
+    <section>
+        <div class="container marginBottom20px">
+            <div class="row">
+                <h3 class="col-10" style="background: #009; color: #fff;">Atraso até 1 mes</h3>
+                <h3 class="col-2 text-right" style="background: #009; color: #fff;">21</h3>
+                <div class="col-1"><b>Contrato</b></div>
+                <div class="col-2"><b>Locatário</b></div>
+                <div class="col-3"><b>Imóvel</b></div>
+                <div class="col-1 text-right"><b>Recibos</b></div>
+                <div class="col-1 text-right"><b>Valor</b></div>
+                <div class="col-1 text-right"><b>Dias</b></div>
+                <div class="col-1 text-right"><b>WhatsApp</b></div>
+                <div class="col-1 text-right"><b>Campo+</b></div>
+                <div class="col-1 text-right"><b>Proprietário</b></div>
+            </div>
+            <div class="row" style="padding-bottom: 5px">
+                <div class="col-1"><button class="btn btn-secondary btn-sm pendenciasContrato" data-cod_loc="22476">22476</button></div>
+                <div class="col-2">Dorcas Elize Villon</div>
+                <div class="col-3">Av. Rio Grande do Sul, 376 - Apto. 202</div>
+                <div class="col-1 text-right">1</div>
+                <div class="col-1 text-right">1.161,85</div>
+                <div class="col-1 text-right">4</div>
+                <div class="col-1">
+                    <button class="btn btn-sm btn-success cobrancaWhatsApp" data-cod_loc="22476" data-mensagem="1">WhatsApp</button>
+                </div>
+                <div class="col-1 d-flex justify-content-end">
+                    <button class="btn btn-sm btn-primary cobrancaCampoMais w-50 me-1" style="height: 31px" data-cod_loc="22476">+</button>
+                    <button class="btn btn-sm btn-danger consultaCampoMais w-50" style="height: 31px; margin-left: 5px" data-cod_loc="22476">?</button>
+                </div>
+                <div class="col-1 d-flex justify-content-end">
+                    <button class="btn btn-sm btn-primary w-50 me-1" style="height: 31px">+</button>
+                    <button class="btn btn-sm btn-success w-50" title="Chamar no WhatsApp" style="height: 31px; margin-left: 5px">
+                        <svg width="16px" height="21px" viewBox="0 0 48 48" version="1.1">
+                            <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <g id="Color-" transform="translate(-700.000000, -360.000000)" fill="#ffffff">
+                                    <path d="M723.993033,360 C710.762252,360 700,370.765287 700,383.999801 C700,389.248451 701.692661,394.116025 704.570026,398.066947 L701.579605,406.983798 L710.804449,404.035539 C714.598605,406.546975 719.126434,408 724.006967,408 C737.237748,408 748,397.234315 748,384.000199 C748,370.765685 737.237748,360.000398 724.006967,360.000398 L723.993033,360.000398 L723.993033,360 Z M717.29285,372.190836 C716.827488,371.07628 716.474784,371.034071 715.769774,371.005401 C715.529728,370.991464 715.262214,370.977527 714.96564,370.977527 C714.04845,370.977527 713.089462,371.245514 712.511043,371.838033 C711.806033,372.557577 710.056843,374.23638 710.056843,377.679202 C710.056843,381.122023 712.567571,384.451756 712.905944,384.917648 C713.258648,385.382743 717.800808,392.55031 724.853297,395.471492 C730.368379,397.757149 732.00491,397.545307 733.260074,397.27732 C735.093658,396.882308 737.393002,395.527239 737.971421,393.891043 C738.54984,392.25405 738.54984,390.857171 738.380255,390.560912 C738.211068,390.264652 737.745308,390.095816 737.040298,389.742615 C736.335288,389.389811 732.90737,387.696673 732.25849,387.470894 C731.623543,387.231179 731.017259,387.315995 730.537963,387.99333 C729.860819,388.938653 729.198006,389.89831 728.661785,390.476494 C728.238619,390.928051 727.547144,390.984595 726.969123,390.744481 C726.193254,390.420348 724.021298,389.657798 721.340985,387.273388 C719.267356,385.42535 717.856938,383.125756 717.448104,382.434484 C717.038871,381.729275 717.405907,381.319529 717.729948,380.938852 C718.082653,380.501232 718.421026,380.191036 718.77373,379.781688 C719.126434,379.372738 719.323884,379.160897 719.549599,378.681068 C719.789645,378.215575 719.62006,377.735746 719.450874,377.382942 C719.281687,377.030139 717.871269,373.587317 717.29285,372.190836 Z" id="Whatsapp"></path>
+                                </g>
+                            </g>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

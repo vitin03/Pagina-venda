@@ -1,0 +1,558 @@
+<html lang="pt_br">
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Aplicativo Casa Nova Locadora</title>
+    <link rel="icon" type="image/png" href="/public/img/logo_novo_sistema.png">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+    integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: verdana;
+        }
+
+        body,
+        html {
+            height: 100%;
+            background: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .corPadrao {
+            color: #19306a;
+        }
+
+        .text_overflow {
+            white-space: nowrap !important;
+            margin-right: 1vh;
+            overflow: hidden !important;
+        }
+
+        .barra_lateral .div_faixa_info {
+            display: flex;
+            position: absolute;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            height: 50%;
+            top: 0px; 
+        }
+
+        .barra_lateral .div_faixa_info .faixa_info {
+            padding: 0.5vh 2vh 0.5vh 3.5vh;
+            width: 105%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .barra_lateral .div_faixa_info .faixa_info .faixa_info_icone {
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 0.5vh 1vh;
+            width: 22%;
+            height: 100%;
+            background-color: #0d6efd;
+            border-radius: 50%;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .barra_lateral .div_faixa_info .faixa_info .faixa_info_texto {
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 0.5vh 1vh;
+            margin-left: -6%;
+            width: 80%;
+            height: 85%;
+            background-color: white;
+            border-top-right-radius: 5vh;
+            border-bottom-right-radius: 5vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .barra_lateral .div_faixa_info .faixa_info .faixa_info_texto .info_texto {
+            width: 100%;
+            padding-left: 3.8vh;
+        }
+
+        .barra_lateral .div_faixa_info .faixa_info .faixa_info_texto .info_texto .titulo {
+            font-size: 1.7vh;
+            margin: 0;
+        }
+
+        .barra_lateral .div_faixa_info .faixa_info .faixa_info_texto .info_texto .texto {
+            font-weight: bold;
+            font-size: 2.6vh;
+            margin: 0;
+        }
+
+        .div_faixa_info .faixa_info .faixa_info_icone .icone {
+            color: white;
+            font-size: 6vh;
+        }
+
+
+        .barra_lateral {
+            position: fixed;
+            width: 30%;
+            height: 100%;
+            bottom: 0px;
+            left: -60vh;
+        }
+
+        .barra_lateral .div_faixa_info {
+            width: 100%;
+        }
+
+
+        .div_chamada_senha {
+            padding-top: 2%;
+            display: flex;
+            justify-content: center;
+            width: 30%;
+            height: 27%;
+            bottom: 1vh;
+            position: fixed;
+            padding: 2vh 2vh 0vh 1.5vh;
+        }
+
+        .div_chamada_senha .chamada_senha {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            border-radius: 3vh;
+            background-color: #DC3545;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .div_chamada_senha .chamada_senha .texto {
+            font-size: 14vh;
+            color: white;
+            margin: 0;
+            font-weight: bold;
+            margin-top: -3vh;
+            height: 70%;
+        }
+
+        .div_chamada_senha .chamada_senha .ultima_chamada {
+            font-size: 3vh;
+            color: white;
+            font-weight: bold;
+            margin-top: 2.5vh;
+            background-color: white;
+            color: #DC3545;
+            padding: 0.5vh;
+            border-radius: 3vh;
+            text-align: center;
+            width: 95%;
+        }
+
+        /*Ultima chamada senha*/
+
+        /*barra quadro*/
+        .barra_quadro {
+            padding-top: 0.5%;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            height: 73%;
+            padding-bottom: 1.5%;
+        }
+
+        .barra_quadro .barra_descricao {
+            width: 90%;
+            display: flex;
+            height: 100%;
+        }
+
+        .barra_quadro .barra_descricao .div_barra_titulo_descricao {
+            padding: 1vh;
+            width: 100%;
+            height: 12%;
+        }
+
+        .barra_quadro .barra_descricao .div_barra_titulo_descricao .titulo_descricao {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            background-color: #0d6efd;
+            border-radius: 3vh;
+        }
+
+        .barra_quadro .barra_descricao .div_barra_titulo_descricao .titulo_descricao .texto {
+            color: white;
+            font-size: 3vh;
+            margin: 0px;
+        }
+
+        .barra_quadro .barra_descricao .div_barra_descricao {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            justify-content: start;
+        }
+
+        .barra_quadro .barra_descricao .div_barra_descricao .barra_descricao {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .barra_quadro .barra_descricao .div_barra_descricao .barra_descricao .texto {
+            color: black;
+            font-size: 3vh;
+            margin: 0px;
+        }
+
+        .quadro_foto_imovel {
+            position: fixed;
+            width: 70%;
+            height: 89%;
+            bottom: 0;
+            right: 0;
+            right: -150vh;
+            padding-right: 2vh;
+            display: flex;
+            flex-wrap: wrap;    
+        }
+
+        .quadro_foto_imovel .div_foto_imovel {
+            width: 100%;
+            height: 100%;
+            padding: 2.5vh 0vh 2vh 0vh;
+            position: relative;
+        }
+
+        .quadro_foto_imovel .div_foto_imovel .imagem {
+            position: fixed;
+            height: 85%;
+            width: 68.9%;
+            border-radius: 3vh;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 0.5vh 1vh;
+        }
+
+
+        .quadro_foto_imovel .div_foto_imovel .video {
+            position: fixed;
+            height: 85%;
+            width: 68.9%;
+            border-radius: 3vh;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 0.5vh 1vh;
+        }
+
+        .quadro_foto_imovel .div_foto_imovel .codigo_imovel_imagem {
+            position: absolute;
+            padding: 1vh 2.5vh;
+            right: 0vh;
+            top: 5vh;
+            z-index: 999;
+            background-color: #0d6efd;
+            border-bottom-left-radius: 2vh;
+        }
+
+        .quadro_foto_imovel .div_foto_imovel .codigo_imovel_imagem .texto {
+            color: white;
+            margin: 0;
+            font-size: 5vh;
+        }
+
+        .quadro_foto_imovel .div_foto_imovel .descricao_imagem {
+            position: absolute;
+            padding: 1vh 2.5vh;
+            left: 0px;
+            bottom: 4vh;
+            z-index: 999;
+            background-color: #0d6efd;
+            border-bottom-right-radius: 2vh;
+        }
+
+        .quadro_foto_imovel .div_foto_imovel .descricao_imagem .texto {
+            color: white;
+            margin: 0;
+            font-size: 5vh;
+        }
+
+        .barra_lateral .div_referencia {
+            position: absolute; 
+            left: 0; 
+            top: 50%; 
+            width: 100%; 
+            height: 25%; 
+            padding: 1vh 2.5vh 2.5vh 2.5vh;
+        }
+
+        .barra_lateral .div_referencia .quadro_referencia {
+            width: 100%; 
+            height: 100%; 
+            background-color: white; 
+            border-radius: 3vh; 
+            padding: 1vh 1vh;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 0.5vh 1vh;
+        }
+
+        .barra_lateral .div_referencia .quadro_referencia .quadro_titulo_referencia {
+            background-color: #0d6efd; 
+            border-radius: 3vh; 
+            padding: 0.2vh;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 0.5vh 1vh;
+        }
+
+        .barra_lateral .div_referencia .quadro_referencia .quadro_titulo_referencia .texto {
+            background-color: #0d6efd; 
+            border-radius: 3vh; 
+            padding: 0.1vh;
+            font-size: 2.6vh;
+            text-align: center;
+            color: white;
+            margin: 0;
+        }
+
+        .barra_lateral .div_referencia .quadro_referencia .quadro_texto_referencia {
+            height: 80%; 
+            padding: 1vh; 
+            overflow: hidden;
+        }
+
+        .barra_lateral .div_referencia .quadro_referencia .quadro_texto_referencia .texto {
+            font-size: 2.5vh;
+            margin: 0;
+        }  
+        
+        .div_faixa_topo_info {
+            position: absolute; 
+            right: 0; 
+            height: 11.5%; 
+            width: 70%; 
+            right: -150vh;
+            padding-top: 1vh; 
+            padding-right: 2vh;
+        }
+
+        .div_faixa_topo_info .div_quadro_faixa_topo_info {
+            display: flex; 
+            width: 100%; 
+            height: 100%; 
+            border-radius: 3.5vh; 
+            background-color: white; 
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 0.5vh 1vh;
+        }
+
+        .div_faixa_topo_info .div_quadro_faixa_topo_info .quadro_faixa_topo_info {
+            display: flex; 
+            align-items: center; 
+            width: 33.333%; 
+            height: 100%; 
+            padding: 1vh;
+        }
+
+        .div_faixa_topo_info .div_quadro_faixa_topo_info .quadro_faixa_topo_info .icone_faixa_topo_info .icone {
+            width: 20%; 
+            font-size: 8vh; 
+            color: #0d6efd;
+        }
+
+        .div_faixa_topo_info .div_quadro_faixa_topo_info .quadro_faixa_topo_info .texto_faixa_topo_info {
+            padding-left: 2vh;
+        }
+
+        .div_faixa_topo_info .div_quadro_faixa_topo_info .quadro_faixa_topo_info .texto_faixa_topo_info .texto {
+            font-size: 4vh; 
+            color: #777; 
+            font-weight: bold; 
+            margin: 0;
+        }
+
+        .container-pagina-imovel {
+            width: 100%;
+            height: 100%;
+            background-color: #eee;
+            position: fixed;
+        }
+
+        .div_faixa_oportunidade {
+            width: 100%; 
+            height: 100%; 
+            position: absolute; 
+            z-index: 99999; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+        }
+        
+        /*Animações*/
+
+        .animacoesImovel .animacaoFaixaOportunidade {
+            animation-name: AnimacaoFaixaOportunidade;
+            animation-duration: 3.5s;
+            animation-fill-mode: forwards;
+        }
+
+        .animacoesImovel .animacaoFaixaToRight {
+            animation-name: AnimacaoFaixaToRight;
+            animation-delay: 3s;
+            animation-duration: 0.4s;
+            animation-fill-mode: forwards;
+            animation-timing-function: linear;
+        }
+
+        .animacoesImovel .animacaoFaixaToRightInvertido {
+            animation-name: AnimacaoFaixaToRightInvertido;
+            animation-delay: 3s;
+            animation-duration: 0.4s;
+            animation-fill-mode: forwards;
+            animation-timing-function: linear;
+        }
+
+
+        .animacoesImovel .animacaoFaixaToLeft {
+            animation-name: AnimacaoFaixaToLeft;
+            animation-delay: 3s;
+            animation-fill-mode: forwards;
+            animation-duration: 0.4s;
+            animation-timing-function: linear; 
+        }
+
+        .animacoesImovel .animacaoFaixaToLeftInvertido {
+            animation-name: AnimacaoFaixaToLeftInvertido;
+            animation-delay: 3s;
+            animation-fill-mode: forwards;
+            animation-duration: 0.4s;
+            animation-timing-function: linear; 
+        }
+
+        .div_faixa_oportunidade .faixa_oportunidade {
+            background-color: #0d6efd; 
+            padding: 4vh; 
+            border-radius: 15vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+        }
+
+        .div_faixa_oportunidade .faixa_oportunidade .texto {
+            color: white; 
+            font-size: 7vh; 
+            margin: 0;
+        }
+
+        @keyframes AnimacaoFaixaToRight {
+            0% {
+                left: -60vh;
+            }
+
+            100% {
+                left: 0px;
+            }
+        }
+
+
+        @keyframes AnimacaoFaixaToLeft {
+            0% {
+                right: -150vh;
+            }
+
+            100% {
+                right: 0px;
+            }
+        }
+
+        @keyframes AnimacaoFaixaToLeftInvertido {
+            0% {
+                right: 0px;
+                
+            }
+
+            100% {
+                right: -150vh;
+            }
+        }
+
+        @keyframes AnimacaoFaixaToRightInvertido {
+            0% {
+                left: 0px;
+            }
+
+            100% {
+                left: -60vh;
+            }
+        }
+
+        @keyframes AnimacaoFaixaOportunidade {
+            0% {
+                opacity: 0;
+            }
+
+            35% {
+                opacity: 1;
+            }
+
+            80% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+    </style>
+    <script>
+        /*
+        $(document).ready(function() {
+            let barraLateral = $('.barra_lateral');
+            let faixaTopo = $('.div_faixa_topo_info');
+            let quadrofotoImovel = $('.quadro_foto_imovel');
+
+            setTimeout(function() {
+                barraLateral.css('left', '0px');
+                faixaTopo.css('right', '0px');
+                quadrofotoImovel.css('right', '0px');
+                barraLateral.addClass('animacaoFaixaToRightInvertido');
+                faixaTopo.addClass('animacaoFaixaToLeftInvertido');
+                quadrofotoImovel.addClass('animacaoFaixaToLeftInvertido');
+            }, 5000)
+        })
+        */
+    </script>
+    <div class="container-pagina-imovel animacoesImovel" id="imovel">
+        <div class="div_faixa_oportunidade">
+            <div class="faixa_oportunidade animacaoFaixaOportunidade">
+                <p class="texto">Oportunidade para venda</p>
+            </div>
+        </div>
+        <!--Barra lateral (esquerda)-->
+        <div class="barra_lateral animacaoFaixaToRight">
+            <div class="imagemFormatoVideo" style="position: absolute; right: -27vh;">
+                <img class="" style="height: 80vh; width: 135vh;" src="img/Logo 3D (1).png">
+            </div>
+        </div>
+        <!--faixa topo-->
+        <div class="div_faixa_topo_info animacaoFaixaToLeft"></div>
+        <!--Fotos do imovel (direita)-->
+        <div class="quadro_foto_imovel animacaoFaixaToLeft">
+            <div class="div_foto_imovel">
+                <video class="video" autobuffer="" loop="" autoplay="" muted="">
+                    <source src="https://intranet.casanova.imb.br/painel/videos/tela1.mp4">
+                </video>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

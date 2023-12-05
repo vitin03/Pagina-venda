@@ -1,0 +1,1078 @@
+:root { 
+	scroll-behavior: auto; 
+}
+.formularioPadrao {
+	padding-top: 20px !important;
+}
+span.ajuda_campo {
+	position: absolute; 
+	top: 1px; 
+	right:1px; 
+	cursor: pointer;
+	color: #666;
+}
+input[data-atualizar="1"] + label, select[data-atualizar="1"] + label {
+	color: red;
+}
+span.ajuda_campo:hover{
+	color: #999
+}
+.subform + div {
+	display: none
+}
+.subform:checked + div {
+	display: block
+}
+.displayNone {
+	display: none;
+}
+.cursorPointer {
+	cursor: pointer;
+}
+.is-pending {
+  border-color: yellow;
+}
+.positionRelative {
+	position: relative;
+}
+.botoesDireita {
+	position: absolute;
+	top: 1px;
+	right: 1px;
+}
+.botoesDireita button.btn-sm {
+	padding: 5px;
+}
+.row>* {
+	padding-right: calc(var(--bs-gutter-x) * .1);
+	padding-left: calc(var(--bs-gutter-x) * .1);
+}
+
+.espacoteste {
+	height: 20px;
+}
+.input {
+	height: 63px !important;
+}
+
+.icon,.iconcheck {
+	margin-left: 80%;
+	top: -40px;
+	left: -10px;
+}
+
+.botaobuscar, .botaoadicionar {
+	background-image: linear-gradient(to bottom right, #05182d, #005182) !important;
+}
+
+.cabecalho {
+	background-image: linear-gradient(to bottom right, #05182d, #005182) !important;
+}
+
+.tableBusca{
+	overflow: hidden;
+	border: 1px solid #05182d;
+	border-radius: 25px !important;
+}
+.tabelaBusca thead{
+	background-color: #05182d;
+	background-image: linear-gradient(to bottom right, #05182d, #005182);
+	color: white;
+}
+.corpotabelabusca:hover {
+	background-color: #00508279 !important;
+	cursor: pointer !important;
+}
+.campoformulario.material-icons {
+	vertical-align: middle;
+	line-height: 0 !important;
+	position: relative;
+	top: -1px;
+}
+.bordaBotaoRedondo, input.bordaRedonda, select.bordaRedonda {
+	border-radius: 20px !important;
+}
+.alturaBotaoAcao {
+	width: 100%;
+	height: 92%;
+}
+.botaoDegrade {
+	background-image: linear-gradient(to bottom right, #05182d, #005182) !important;
+}
+.separadorDetalheFormulario {
+	height: 15px;
+}
+.form-control.is-pending {
+    border-color: #d39e00;
+    padding-right: calc(1.5em + 0.75rem);
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.5em + 0.35rem) calc(0.5em + 0.35rem);
+}
+
+.collapse_editar_buscar {
+	position: fixed;
+	bottom: 15px;
+	right: 15px;
+	z-index: 999;
+}
+
+.collapse_editar_buscar button {
+	height: 50px;
+	width: 50px;
+	border-radius: 50px;
+	margin-top: 5px;
+}
+
+.card_head button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #005182;
+	border: none;
+}
+
+.card {
+	background-color: transparent;
+	border: none;
+}
+
+.card button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.card button:hover,
+.card_head button:hover {
+	background-color: rgb(29, 29, 29);
+
+}
+
+.icone_seta {
+	color: white;
+}
+
+.body_item_busca,
+  .head_item_busca {
+    border: 1px solid black;
+    height: 30px;
+  }
+
+  .tabela_busca > div {
+
+    height: 200px;
+    overflow-y: scroll;
+  }
+
+  .body_item_busca {
+
+    display: flex;
+    align-items: center;
+  }
+
+  .tabela_busca_row:hover {
+
+    cursor: pointer;
+    background-image: linear-gradient(to bottom, #23477059, #26577742);
+  }
+
+  .head_item_busca {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .tabela_busca_head_row {
+    color: white;
+    background-image: linear-gradient(to bottom, #05182d, #005182) !important;
+  }
+
+  .executarBusca {
+	cursor: pointer;
+  }
+  .executarBusca:hover {
+	background-color: #eee;
+  }
+
+  /*-----configuraÃƒÂ§ÃƒÂµes do menu de contexto----- */
+
+.menu_contexto {
+	display: none;
+	position: absolute;
+	z-index: 999;
+	border: 1px solid black;
+	border-radius: 5px;
+	background-color: white;
+  }
+  
+  .menu_contexto li {
+	list-style: none;
+	padding: 5px;
+	border-radius: 5px;
+  }
+  
+  .menu_contexto li:hover {
+	background-color: rgba(0, 0, 0, 0.158);
+  }
+  
+  .menu_contexto ul li{
+	margin: 0 !important;
+	font-weight: bold;
+	background-color: white;
+  }
+  
+.menu_contexto  ul {
+	padding: 8px !important;
+	margin: 0 !important;
+  }
+  
+  .copiar_conteudo input:disabled {
+	pointer-events: none;
+  }
+  
+  .menu_contexto:hover {
+	cursor: pointer;
+  }
+  .menu_contexto hr {
+	margin-top: 2px;
+	margin-bottom: 2px;
+  }
+  
+  /*calendario*/
+
+  .calendario span,
+  p,
+  h1 {
+	  font-family: 'Roboto', sans-serif;
+  }
+
+  .calendario {
+	  background-color: #1a69c9;
+	  border-radius: 4px;
+	  height: auto;
+	  width: 100%;
+	  border: 1px solid #007cc9;
+	  z-index: 9;
+  }
+
+  .calendario .mes-anterior {
+	  left: 0px;
+  }
+
+  .calendario .proximo-mes {
+	  right: 0px;
+  }
+
+  .mes-atual {
+	  padding-bottom: 5px;
+	  background-color: white;
+	  border-bottom-left-radius: 4px;
+	  border-bottom-right-radius: 4px;
+  }
+
+  .mes-atual li {
+	  color: rgb(73, 73, 73);
+  }
+
+  .mes-atual span {
+	  color: rgb(49, 49, 49);
+  }
+
+  .data-atual {
+	  border-radius: 4px;
+	  border-bottom: 1px solid rgba(73, 114, 133, .6);
+	  display: flex;
+	  justify-content: space-between;
+	  padding: 0px 20px;
+	  height: 45px;
+  }
+
+  .data-atual h1 {
+	  color: #dfebed;
+	  font-size: 1.4em;
+	  font-weight: 300;
+  }
+
+  .dias-semana {
+	  color: #dfebed;
+	  display: flex;
+	  justify-content: space-between;
+	  font-weight: 600;
+	  padding: 10px 10px;
+	  margin-bottom : 0px !important;
+  }
+  .dias-semana li {
+	width: 38.8px;
+	text-align: center;
+  }
+  .semanas {
+	  color: #fff;
+	  display: flex;
+	  flex-direction: column;
+	  padding: 0 10px;
+  }
+
+  .semanas div {
+	  display: flex;
+	  font-size: 1em;
+	  font-weight: 300;
+	  justify-content: space-between;
+	  width: 100%;
+  }
+
+  .outro-mes {
+	  opacity: .3;
+  }
+
+  .semanas span {
+	  padding: 8px 10px;
+	  width: 37.8px;
+	  text-align: center;
+  }
+
+  .semanas span.ativado {
+	  font-weight: bold;
+	  color: darkblue
+  }
+
+  .semanas span:hover {
+	  cursor: pointer;
+	  font-weight: 600;
+	  color: #6cb5ff;
+  }
+
+  .calendario .evento_naovisto, .calendario .evento_concluido, .evento_pendente {
+	  position: relative;
+  }
+  .calendario .evento_naovisto:after, .calendario .evento_concluido:after, .calendario .evento_pendente:after{
+	content: '*';
+	font-size: 30px;
+	position: absolute;
+	right: 0;
+	top: -5px;
+  }
+  .calendario .evento_naovisto:after {
+	  color: #f00;
+  }
+.calendario .evento_concluido:after {
+	color: #147730;
+}
+
+.calendario .evento_pendente:after {
+	color: #Ffbe00;
+}
+  .mes-anterior span:hover {
+	  cursor: pointer;
+	  color: rgb(169, 173, 188) !important;
+  }
+
+  .proximo-mes span:hover {
+	  cursor: pointer;
+	  color: rgb(169, 173, 188) !important;
+  }
+
+  .dias-semana li.ativado {
+	  color: #1a69c9;
+  }
+
+  .semanas span {
+	  border-radius: 5px;
+  }
+  .feriado {
+	color: red !important;
+  }
+  .material-icons {
+	  font-family: 'Material Icons' !important;
+  }
+
+  /*avisos*/
+  .avisos-sistema .avisos-urgentes:hover{
+	  background-color: rgb(151, 40, 40) !important;
+	  cursor: pointer;
+  }
+
+  .avisos-sistema .avisos-recepcao:hover{
+	  background-color: rgb(26, 63, 148) !important;
+	  cursor: pointer;
+  }
+  .popover {
+    
+	max-width: 200px;
+	padding: 10px;
+}
+.legenda-cor {
+	width: 12px;
+	height: 12px;
+	border: 1px solid black;
+}
+.navbar-avisos a {
+	color: rgba(255, 20, 10, .9) !important;
+}
+
+.navbar-avisos a:hover {
+	color: rgba(255, 20, 10, 1) !important;
+}
+.icone-small {
+	font-size: large;
+}
+
+.botao-compromisso {
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+.div_calendario {
+	height: 100vh !important;
+	right: 5px;
+	position: fixed;
+}
+
+.compromissos {
+	margin-bottom: 20px;
+}
+
+.div_compromissos .titulo-campo {
+	margin-top: -20px !important;
+	padding-top: 20px;
+	position: fixed;
+	z-index: 999;
+	width: 100%;
+	background-color: white !important;
+}
+
+html ::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+
+html ::-webkit-scrollbar-thumb {
+	border-radius: 3px;
+	background: #115ba5;
+}
+
+html ::-webkit-scrollbar-track {
+	background: #ededed00;
+}
+
+@media (max-width: 990px) {
+	.div_calendario {
+		position: static;
+	}
+}
+
+.conteudo-compromisso .mensagem-compromisso {
+    width: 80%;
+}
+
+.conteudo-compromisso .botoes-compromisso {
+    width: 20%;
+}
+
+.content-modal-compromisso {
+	height: 400px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.cadastrar-compromisso-com-copia .botoes-favoritos {
+	height: 15%;
+}
+
+.cadastrar-compromisso-com-copia .caixa-pessoas {
+    height: 270px;
+    overflow-y: scroll;
+}
+
+.titulo-conteudo {
+    top: 56px;
+    position: sticky;
+    background-color: white;
+    z-index: 9;
+    border-bottom: 1px solid rgb(151, 151, 151);
+}
+
+.conteudo-modal-visualizacao .dados-mensagem .conteudo-mensagem p{
+    height: 300px;
+    overflow-y: auto;
+}   
+
+@media(max-width: 990px) {
+    .titulo-conteudo {
+        top: 46px;
+    }
+}
+
+.conteudo-mensagem {
+    height: 50%;
+}
+
+.conteudo-compromisso .corpo-compromisso {
+    height: 100px;
+	overflow-y:auto !important;
+}
+
+@keyframes mensagemAviso {
+	0% {
+		right: 20px
+	}
+
+	100% {
+		right: 40px;
+		opacity: 95%;
+	}
+}
+
+.div_botoes_avisos .aviso-importante .aviso-icone {
+	background-color: rgb(210, 77, 77);
+}
+
+.div_botoes_avisos .aviso-importante .aviso-icone:hover {
+	background-color: rgb(146, 50, 50);
+}
+
+.div_botoes_avisos .aviso-recepcao .aviso-icone {
+	background-color: rgb(30, 76, 212);
+}
+
+.div_botoes_avisos .aviso-recepcao .aviso-icone:hover {
+	background-color: rgb(26, 55, 124);
+}
+
+.div_botoes_avisos .aviso-mensagens .aviso-icone {
+	background-color: #36b94b;
+}
+.div_botoes_avisos #imovel_favoritos .aviso-icone {
+	background-color: #aa1103;
+}
+.div_botoes_avisos #imovel_emprestar .aviso-icone {
+	background-color: #22a38c;
+}
+.div_botoes_avisos #imovel_reservar .aviso-icone {
+	background-color: #ee7432;
+}
+.div_botoes_avisos .aviso-mensagens .aviso-icone:hover {
+	background-color: rgb(27, 109, 51);
+}
+.atualizar-lista {
+	color: #888 !important;
+}
+.div_botoes_avisos .botoes-avisos {
+	bottom: 15px;
+	right: 10px;
+	position: fixed;
+	z-index: 990;
+}
+
+.div_botoes_avisos .botoes-avisos .aviso-icone {
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+}
+
+.div_botoes_avisos .aviso-descricao {
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	opacity: 0%;
+	z-index: 985;
+	right: 0;
+}
+
+.div_botoes_avisos .red-icon {
+	width: 20px;
+	height: 20px;
+	background-color: red;
+	font-size: 12px;
+	color: white !important;
+	border-radius: 50%;
+	z-index: 99999;
+	top: 5px;
+}
+
+.botoes-avisos>div {
+	margin-bottom: 5px;
+}
+
+.input-check_radio-menu:checked+span {
+	background-color: #2d84e1;
+	color: white;
+}
+
+.notificacoes-filtro-titulo{
+	z-index: 1000;
+}
+.gravar-campo-formulario[data-alterado="4"] + label{
+	color: black !important;
+	opacity: 1 !important;
+}
+.gravar-campo-formulario[data-alterado="3"] + label{
+	color: red !important;
+	opacity: 1 !important;
+}
+.gravar-campo-formulario[data-alterado="2"] + label{
+	color: black !important;
+	opacity: 1 !important;
+}
+.gravar-campo-formulario[data-alterado="1"] + label{
+	color: black !important;
+	opacity: 1 !important;
+}
+.input-documentacao-file button {
+	line-height: 22px;
+}
+.form-control.is-pending {
+	border: 1px solid #e97007;
+	background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCg0KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4NCjwhLS0gVXBsb2FkZWQgdG86IFNWRyBSZXBvLCB3d3cuc3ZncmVwby5jb20sIEdlbmVyYXRvcjogU1ZHIFJlcG8gTWl4ZXIgVG9vbHMgLS0+DQo8c3ZnIGhlaWdodD0iODAwcHgiIHdpZHRoPSI4MDBweCIgdmVyc2lvbj0iMS4xIiBpZD0iX3gzMl8iIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIA0KCSB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4NCgkuc3Qwe2ZpbGw6I2U5NzAwNzt9DQo8L3N0eWxlPg0KPGc+DQoJPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSI1MDEuNTM5LDE2OS4yMjEgNDUzLjg4Niw4Ni43IDMwMy42NjksMTczLjQ0OSAzMDMuNjY5LDAgMjA4LjM2NSwwIDIwOC4zNjUsMTczLjQ3OSA1OC4xMTQsODYuNzMgDQoJCTEwLjQ2MSwxNjkuMjYxIDE2MC42NzQsMjU1Ljk5IDEwLjUwMSwzNDIuNzEgNTguMTU0LDQyNS4yMzEgMjA4LjM2NSwzMzguNDgyIDIwOC4zNjUsNTEyIDMwMy42NjksNTEyIDMwMy42NjksMzM4LjU0MiANCgkJNDUzLjg0Niw0MjUuMjcxIDUwMS40OTksMzQyLjc0IDM1MS4yNjcsMjU1Ljk5IAkiLz4NCjwvZz4NCjwvc3ZnPg==);
+	background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
+.form-control.is-pending:focus {
+	border: 1px solid #e97007;
+	outline: 4px solid #f7e4c290 !important;
+}
+.readOnly{
+	cursor: pointer;
+	user-select: none !important;
+}
+
+.mensagemCarregando {
+    position: fixed;
+    top: 0;
+    z-index: 999999;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+}
+
+.mensagemCarregando h5 {
+    padding-bottom: 20px;
+}
+
+.mensagemCarregando .fundoBloqueado {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.9;
+    background-color: white;
+    z-index: 9998;
+}
+
+.mensagemCarregando .conteudoMensagem {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    margin-top: -100px;
+    z-index: 9999;
+}
+
+.mensagemCarregando .iconeCarregando {
+    padding-top: 20px;
+}
+.w-20 {
+	width: 20% !important;
+}
+
+.w-60 {
+	width: 60% !important;
+}
+
+.selectOpcaoBuscaImovel {
+	z-index: 999999;
+	max-height: 300px;
+	overflow-y: scroll;
+}
+
+.botaoOpcaoBuscaImovel {
+	background-color: rgb(228, 228, 228) !important;
+	border: 1px solid grey;
+	width: 100%;
+	height: 60px;
+	border-radius: 5px;
+	cursor: pointer !important;
+}
+
+.botaoOpcaoBuscaImovel label {
+	font-size: 14px;
+	font-weight: 500;
+	cursor: pointer !important;
+}
+
+.botaoOpcaoBuscaImovel p {
+	font-size: 16px;
+	color: rgb(99, 98, 98);
+	padding-bottom: 5px;
+	cursor: pointer !important;
+}
+
+.optionFormCheck,
+.labelOptionFormCheck {
+	cursor: pointer !important;
+}
+.sessao_descricao_imovel .titulo {
+	color: rgb(24, 24, 24);
+	font-weight: 700;
+}
+
+.sessao_descricao_imovel {
+	height: 300px;
+	overflow-y: auto !important;
+}
+
+.sessao_tipo_valor_imovel {
+	height: 45px;
+}
+
+.sessao_opcoes_imovel {
+	height: 85px;
+}
+
+.texto_amarelo {
+	color: rgb(255, 164, 46);
+}
+
+.texto_azul {
+	color: rgb(20, 75, 215);
+}
+.sessao_opcoes_imovel .opcao_imovel:hover {
+	background-color: rgb(183, 182, 182);
+	border-radius: 5px;
+}
+.sessao_tipo_valor_imovel .tipo_imovel {
+	font-size: 15px;
+}
+.sessao_tipo_valor_imovel .valor_imovel {
+	font-size: 20px;
+}
+
+@media(max-width: 1075px) {
+	.sessao_tipo_valor_imovel .tipo_imovel {
+		font-size: 13px;
+	}
+	.sessao_tipo_valor_imovel .valor_imovel {
+		font-size: 35px;
+	}
+}
+
+/** teste do carde do imÃ³vel **/
+.abaixo10px {
+	margin-bottom: 10px !important;
+}
+
+.abaixo5px {
+	margin-bottom: 5px !important;
+}
+
+.corPadrao {
+	color: #19306a;
+}
+
+
+.cardImovel .descricaoCardImovel {
+	height: 70px !important;
+	overflow: auto !important;
+}
+
+.cardImovel .descricaoCardImovel span {
+	line-height: 23px;
+}
+
+.cardImovel .cardInfoImovel .sessaoImovelTipo p {
+	font-size: 16px;
+	font-weight: 600;
+}
+.cardImovel .cardInfoImovel .sessaoImovelEndereco {
+	color: rgb(147, 147, 147) !important;
+	font-weight: 400;
+}
+
+.cardImovel:hover{
+   border: 1px solid #00a !important;
+   cursor: pointer;
+   box-shadow: 5px 18px 18px #88888843;
+}
+
+.cardInfoImovel:hover .infoImovel{
+	display: none !important;
+}
+
+.cardInfoImovel:hover .enderecoCompleto{
+	display: block !important;
+}
+
+.cardImovel .divValorImovel .opcaoIcones span {
+	padding: 4px;
+	cursor: pointer;
+}
+
+.cardImovel .divValorImovel .valorImovel {
+	font-size: 17px;
+}
+
+.text_overflow {
+	white-space: nowrap !important;
+	overflow: hidden !important;
+}
+
+.cardImovel .cardInfoImovel .enderecoCompleto {
+	color: rgb(147, 147, 147) !important;
+}
+
+.cardImovel .cardInfoImovel{
+	height: 87px !important;
+	overflow-y: hidden;
+}
+.cardImovelMapa .descricaoCardImovel {
+	margin-bottom: 3px !important;
+}
+
+.cardImovelMapa .material-icons {
+	font-size: 15px !important;
+}
+.cardImovelMapa .cardInfoImovel .sessaoImovelEndereco {
+	color: rgb(147, 147, 147) !important;
+	font-weight: 400;
+}
+.cardImovelMapa .descricaoCardImovel {
+	max-height: 70px !important;
+	overflow: auto !important;
+}
+
+.cardImovelMapa .cardInfoImovel {
+	height: 60px !important;
+	overflow: hidden !important;
+}
+.fs-20-p {
+	font-size: 20px !important;
+}
+
+.fs-12-p {
+	font-size: 12px !important;
+}
+
+.opcao_detalhe_imovel:hover {
+	color: #254db1;
+	border-radius: 5px;
+}
+.descricaoImagem {
+	bottom: 13px !important;
+	border-bottom-right-radius: 20px !important;
+	background-color: #254db193;
+}
+.opcaoIcones .imovel_favoritos.marcado, button.imovel_favoritos.marcado {
+	color: #aa1103 !important;
+}
+.opcaoIcones .imovel_emprestar.marcado, button.imovel_emprestar.marcado {
+	color: #22a38c !important;
+}
+.opcaoIcones .imovel_reservar.marcado, button.imovel_reservar.marcado {
+	color: #ee7432 !important;
+}
+.telefoneWhatsapp {
+	z-index: 9999; 
+	top: 5px; 
+	right: 16px;
+}
+.telefoneChamada {
+	z-index: 9999; 
+	top: 5px; 
+	right: 36px;
+}
+.h-100-p {
+	height: 100px !important;
+}
+.w-200-p {
+	width: 200px !important;
+}
+
+.tabela_leads .tabela-body .tabela-row {
+	border-bottom: 1px solid rgb(164, 164, 164) !important;
+}
+
+.tabela_leads .tabela-body .tabela-row:hover {
+	background-color: rgb(184, 184, 184);
+}
+
+.tabela_leads .tabela-body.hover-none .tabela-row:hover {
+	background-color: white !important;
+}
+
+.tabela_leads .tabela-body .tabela-row:last-child {
+	border-bottom: none !important;
+	border-bottom-left-radius: 5px !important;
+	border-bottom-right-radius: 5px !important;
+}
+
+.tabela_leads .tabela-head:first-child {
+	border-top-left-radius: 5px !important;
+	border-top-right-radius: 5px !important;
+}
+
+.dropdown-filtro-botao-leads label:hover {
+	background-color: rgb(184, 184, 184) !important;
+}
+
+.dropdown-filtro-botao-leads input:checked + span {
+	background-color: rgb(70, 149, 253) !important;
+}
+.h-80-p {
+	height: 80px !important;
+}
+
+.h-50-p {
+	height: 50px !important;
+}
+
+.h-200-p {
+	height: 200px !important;
+}
+.h-125-p {
+	height: 125px !important;
+}
+.h-150-p {
+	height: 150px !important;
+}
+
+.w-30 {
+	width: 30% !important;
+}
+
+.w-70 {
+	width: 70% !important;
+}
+
+.h-37-p {
+	height: 37.5% !important;
+}
+
+.fs-15-p {
+	font-size: 15px !important;
+}
+
+.fs-18-p {
+	font-size: 18px !important;
+}
+
+.w-33-p {
+	width: 33.33%;
+}
+.fw-semi-bold {
+	font-weight: 500 !important;
+}
+.w-350-p {
+	width: 350px !important;
+}
+.h-200-p {
+	height: 200px !important;
+}
+.botaoTabPagina, .botaoTabPaginaModal {
+	color: black;
+	background-color: #f1f1f1;
+	margin-bottom: -1px !important;
+}
+
+.botaoTabPagina input:checked+.conteudoBotao, .botaoTabPaginaModal input:checked+.conteudoBotao {
+	background-color: #0D6EFD;
+	color: white;
+	margin-bottom: -1px !important;
+	border: 1px solid #0D6EFD;
+}
+.iconeImovelVisto {
+	right: 5px !important;
+	top: 5px !important;
+}
+.bg-cinza-claro {
+	background-color: #e4e2e2;
+}
+
+.h-50-v {
+	height: 50vh !important;
+}
+
+.h-25-v {
+	height: 25vh !important;
+}
+
+.h-50-p {
+	height: 50px !important;
+}
+.bg-orange {
+	background-color: rgb(244, 124, 26) !important;
+}
+.border-orange {
+	border-color: rgb(244, 124, 26) !important;
+}
+.hoverBgCinza:hover {
+	background-color: #bababa !important;
+}
+.min-h-120-p {
+	min-height: 120px !important;
+}
+
+input[name="tab"]:checked+.conteudoBotao .botaoTabAzul {
+	background-color: white !important;
+	border: none !important;
+	color: #0D6EFD !important;
+}
+
+input[name="tab"]+.conteudoBotao .botaoTabAzul {
+	background-color: #0D6EFD !important;
+	border: none !important;
+	color: white !important;
+}
+
+.situacaoMensagemLaranja {
+	background-color: #fd710d25 !important;
+	border-color: #fd710d !important;
+}
+
+.situacaoMensagemAzul {
+	background-color: #0d6dfd25 !important;
+	border-color: #0D6EFD !important;
+}
+
+.situacaoMensagemCinza {
+	background-color: #7b7b7b25 !important;
+	border-color: #7b7b7b !important;
+}
+.pendencias_ficha {
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	width: 13px;
+	height: 13px;
+}
+.mh-320-p {
+	max-height: 320px !important;
+}
+.dropdown-item-check label:hover {
+	background-color: #c3c3c3 !important;
+}
+
+.dropdown-toggle-hover {
+	height: 58px;
+}
+
+.dropdown-toggle-hover:hover+.dropdown-menu-hover {
+	display: block !important;
+}
+
+.dropdown-menu-hover:hover {
+	display: block !important;
+}
+
+.dropdown-menu-hover {
+	z-index: 950 !important;
+	background-color: white;
+	padding-top: 5px !important;
+	padding-bottom: 5px !important;
+	max-height: 218px !important;
+	overflow-y: auto !important;
+}
