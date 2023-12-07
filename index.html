@@ -301,32 +301,6 @@
             }
         }
     </style>
-    <script>
-        function convertTelefone(telefone) {
-            return telefone.replace(/[^\w]/gi, '');
-        }
-
-        function dropDownX(conteudo, enter = true, left = true) {
-            (left) ? conteudo.css('animation-name', 'enterAnimateDropDownToRight') : conteudo.css('animation-name', 'exitAnimateDropDownToRight');
-            (enter) ? conteudo.css('animation-name', 'enterAnimateDropDownToLeft') : conteudo.css('animation-name', 'exitAnimateDropDownToLeft');
-            conteudo.css('animation-duration', '0.2s');
-            conteudo.css('animation-fill-mode', 'forwards');
-        }
-
-        $(document).on('click', '.botaoDropDownToLeft', function () {
-            dropDownX($(this).parent().find('.conteudo'), true, true);
-        })
-
-        $(document).on('mouseleave', '.dropDownToLeft', function () {
-            dropDownX($(this).find('.conteudo'), false, true);
-        })
-
-        $(document).on('click', '#botaoWhatsapp', function () {
-            let mensagem = 'Olá! Estou interessado no seu produto e gostaria de obter mais informações. Fico no aguardo!';
-            let telefone = '+55 (37) 99826-4728';
-            window.open(`https://api.whatsapp.com/send?phone=${convertTelefone(telefone)}&text=${mensagem}`);
-        })
-    </script>
     <div class="conteudo w-100 h-100 position-relative">
         <div class="div_botao_configuracao fixed-top d-flex justify-content-end align-items-center">
             <div class="dropDownToLeft position-absolute d-flex align-items-center">
@@ -592,15 +566,20 @@
                         <div class="border_bottom_bar"></div>
                     </div>
                     <div class="conteudo row m-0">
+                        <!--Card individual-->
                         <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
                             <div class="p-2 py-4 card_info d-flex align-items-center flex-column my-1 mx-1">
                                 <div class="conteudo d-flex align-items-center flex-column">
-                                    <h3>Titulo da estatística</h3>
-                                    <div class="circular-progress d-flex justify-content-center align-items-center mb-2"
-                                        data-final="40">
-                                        <span class="progress-value text-dark">0%</span>
+                                    <div class="titulo">
+                                        <h3>Titulo da estatística</h3>
                                     </div>
-                                    <div>
+                                    <div class="grafico">
+                                        <div class="circular-progress d-flex justify-content-center align-items-center mb-2"
+                                            data-final="40">
+                                            <span class="progress-value text-dark">0%</span>
+                                        </div>
+                                    </div>
+                                    <div class="descricao">
                                         <p class="m-0">Descrição da estatística</p>
                                     </div>
                                 </div>
@@ -608,22 +587,36 @@
                         </div>
                         <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
                             <div class="p-2 py-4 card_info d-flex align-items-center flex-column my-1 mx-1">
-                                <div class="conteudo_card d-flex align-items-center flex-column">
-                                    <h3>Titulo Card 1</h3>
-                                    <div class="circular-progress d-flex justify-content-center align-items-center"
-                                        data-final="50">
-                                        <span class="progress-value text-dark">0%</span>
+                                <div class="conteudo d-flex align-items-center flex-column">
+                                    <div class="titulo">
+                                        <h3>Titulo da estatística</h3>
+                                    </div>
+                                    <div class="grafico">
+                                        <div class="circular-progress d-flex justify-content-center align-items-center mb-2"
+                                            data-final="11.3">
+                                            <span class="progress-value text-dark">0%</span>
+                                        </div>
+                                    </div>
+                                    <div class="descricao">
+                                        <p class="m-0">Descrição da estatística</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
                             <div class="p-2 py-4 card_info d-flex align-items-center flex-column my-1 mx-1">
-                                <div class="conteudo_card d-flex align-items-center flex-column">
-                                    <h3>Titulo Card 1</h3>
-                                    <div class="circular-progress d-flex justify-content-center align-items-center"
-                                        data-final="99.8">
-                                        <span class="progress-value text-dark">0%</span>
+                                <div class="conteudo d-flex align-items-center flex-column">
+                                    <div class="titulo">
+                                        <h3>Titulo da estatística</h3>
+                                    </div>
+                                    <div class="grafico">
+                                        <div class="circular-progress d-flex justify-content-center align-items-center mb-2"
+                                            data-final="67.5">
+                                            <span class="progress-value text-dark">0%</span>
+                                        </div>
+                                    </div>
+                                    <div class="descricao">
+                                        <p class="m-0">Descrição da estatística</p>
                                     </div>
                                 </div>
                             </div>
@@ -732,10 +725,10 @@
             </div>
         </div>
     </div>
-    </div>
+    <script type="text/javascript" src="./js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
         crossorigin="anonymous"></script>
 </body>
 
-</html>
+</html>1
