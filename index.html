@@ -19,31 +19,7 @@
 
 <body>
     <script type="text/javascript">
-        $(document).ready(function () {
-            let circular_progress = document.getElementsByClassName("circular-progress");
-            let progress_value = document.getElementsByClassName("progress-value");
-            let progressStartValue = 0;
-            let speed = 10;
-            let progressEndValue = [];
-
-            for (let i = 0; i < circular_progress.length; i++) {
-                progressEndValue.push(Number(circular_progress[i].getAttribute('data-final')))
-                let progress = setInterval(() => {
-                    progressStartValue++;
-                    circular_progress[i].style.background = `conic-gradient(#7d2ae8 ${3.6 * progressStartValue}deg, #ededed 0deg)`;
-                    progress_value[i].textContent = `${progressStartValue}%`;
-                    if (progressStartValue == progressEndValue[i]) {
-                        clearInterval(progress);
-                    }
-
-                    if (progressStartValue >= progressEndValue[i]) {
-                        progress_value[i].textContent = `${progressEndValue[i]}%`;
-                        clearInterval(progress);
-                    }
-
-                }, speed);
-            }
-        })
+        
     </script>
     <style>
         .text-purple {

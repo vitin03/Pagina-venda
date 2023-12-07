@@ -1,0 +1,305 @@
+<html lang="pt_br" ma1="ma">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Aplicativo Casa Nova Locadora</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"
+        integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/public/js/script.js"></script>
+    <script src="/public/js/jquery.cookie.js"></script>
+    <link href="../App/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <style>
+        .text-purple {
+            color: rgb(91, 17, 218);
+        }
+
+        .bg-degrade-purple {
+            background-image: linear-gradient(to bottom right, rgb(51, 4, 131), rgb(131, 60, 255));
+        }
+
+        /*Componente imagem*/
+        .conteudo_produto_venda {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .quadro_promocao {
+            width: 100%;
+            height: 65px !important;
+        }
+
+        .time_cont {
+            background-color: brown;
+        }
+
+        .card_info .icone {
+            width: 120px;
+            height: 120px;
+            background-color: #e0b0ff !important;
+        }
+
+        .border_bottom_bar {
+            margin-top: 15px;
+            height: 5px;
+            width: 50px;
+            background-color: rgb(51, 51, 51);
+            border-radius: 5px;
+        }
+
+        .bg_roxo {
+            background-color: rgb(131, 60, 255) !important;
+        }
+
+        .hover_visitas:hover {
+            color: #0b5ed7 !important;
+        }
+
+        #botaoWhatsapp {
+            background-color: #25d366 !important;
+        }
+
+        #botaoWhatsapp:hover {
+            background-color: #1db154 !important;
+        }
+
+        #botaoInstagram {
+            background-color: #c13584 !important;
+        }
+
+        #botaoInstagram:hover {
+            background-color: #a22d6f !important;
+        }
+
+        .rodape {
+            background-color: rgb(131, 60, 255) !important;
+        }
+
+        /*progress bar*/
+
+        :root {
+            --progress-value: attr;
+        }
+
+        .div_progress_bar {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background:
+                radial-gradient(closest-side, white 79%, transparent 80% 100%),
+                conic-gradient(hotpink calc(var(--progress-value) * 1%), pink 0);
+            animation: progress 1s forwards;
+        }
+
+        /*Configurações gerais das sessões*/
+        .conteudo .page_section .conteudo .card_info {
+            background-color: white !important;
+            border-radius: 20px;
+            min-height: 385px;
+        }
+
+        .conteudo .page_section .card_info .conteudo_card {
+            height: 100% !important;
+        }
+
+        /*Sessões impares (fundo branco)*/
+
+        .conteudo .page_section.fundo_branco {
+            background-image: white;
+        }
+
+        .conteudo .page_section.fundo_branco .title h1 {
+            color: black;
+        }
+
+        .conteudo .page_section.fundo_branco .title .border_bottom_bar {
+            background-color: rgb(131, 60, 255);
+        }
+
+        /*Sessões pares (fundo roxo)*/
+        .conteudo .page_section.fundo_roxo {
+            background-image: linear-gradient(to bottom right, rgb(51, 4, 131), rgb(131, 60, 255));
+        }
+
+        .conteudo .page_section.fundo_roxo .title h1 {
+            color: white;
+        }
+
+        .conteudo .page_section.fundo_roxo .title .border_bottom_bar {
+            background-color: white;
+        }
+
+        .circular-progress {
+            position: relative;
+            height: 250px;
+            width: 250px;
+            border-radius: 50%;
+            background: conic-gradient(#7d2ae8 3.6deg, #ededed 0deg);
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 8px -4px, rgba(0, 0, 0, 0.3) 0px 4px 8px -4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .circular-progress::before {
+            content: "";
+            position: absolute;
+            height: 200px;
+            width: 200px;
+            background-color: white;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 7px 7px -6px inset, rgba(0, 0, 0, 0.3) 0px 7px 7px -9px inset;
+            border-radius: 50%;
+            color: black;
+        }
+
+        .progress-value {
+            position: relative;
+            font-size: 55px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+        }
+
+        .footer_pagina {
+            background-color: rgb(48, 48, 48) !important;
+        }
+
+        .footer_pagina .conteudo .card .title .texto {
+            color: #ffffff !important;
+        }
+
+        .footer_pagina .conteudo .card .body .texto {
+            color: #adadad !important;
+        }
+
+        .footer_pagina .copyright {
+            background-color: rgb(36, 36, 36) !important;
+        }
+
+        .footer_pagina .copyright .texto {
+            color: #949494 !important;
+        }
+
+        /*card no celular*/
+        @media (max-width: 767px) {
+            .conteudo .page_section .conteudo .card_info {
+                min-height: auto !important;
+            }
+        }
+
+        .div_botao_configuracao {
+            right: 10px;
+            top: 45px;
+        }
+
+        .div_botao_configuracao .conteudo {
+            opacity: 0;
+        }
+
+        .div_botao_configuracao .conteudo .conteudo_items {
+            border-radius: 35px !important;
+            border: 1px solid rgb(32, 32, 32) !important;
+            min-width: 200px;
+            padding: 12px 0 !important;
+        }
+
+        .div_botao_configuracao .botao_configuracao {
+            height: 70px !important;
+            width: 70px !important;
+            background-color: rgb(32, 32, 32);
+            border: 1px solid rgb(32, 32, 32);
+            cursor: pointer;
+        }
+
+        .div_botao_configuracao .botao_configuracao:hover {
+            background-color: #000;
+            border: 1px solid #000;
+        }
+
+        @keyframes enterAnimateDropDownToLeft {
+
+            from {
+                opacity: 0%;
+                right: 0%;
+            }
+
+            to {
+                opacity: 100%;
+                right: 100%;
+            }
+        }
+
+        @keyframes exitAnimateDropDownToLeft {
+            from {
+                opacity: 100%;
+                right: 100%;
+            }
+
+            to {
+                opacity: 0%;
+                right: 0%;
+            }
+        }
+
+
+        @keyframes enterAnimateDropDownToRight {
+            from {
+                opacity: 0%;
+                right: 0%;
+            }
+
+            to {
+                opacity: 100%;
+                right: 100%;
+            }
+        }
+
+        @keyframes exitAnimateDropDownToRight {
+            from {
+                opacity: 0%;
+                right: 0%;
+            }
+
+            to {
+                opacity: 100%;
+                right: 100%;
+            }
+        }
+    </style>
+    <div class="w-100 bg-primary" style="min-height: 100vh;">
+        <div class="h-100 w-100 row m-0 bg-white">
+            <div class="col-2 p-0">
+                <div class="w-100 h-100 coluna_item_config"></div>
+            </div>
+            <div class="col-10 p-0">
+                <div class="coluna_config w-100 h-100 py-5" style="background-color: #e6e6e6;">
+                    <div class="container bg-white rounded p-3" style="min-height: 90vh;">
+                        <div class="titulo d-flex align-items-center">
+                            <span class="material-icons fs-2 me-2">settings</span>
+                            <h3 class="m-0">Pagina de Configurações do site</h3>
+                        </div>
+                        <hr>
+                        <div class="conteudo">
+                            Nessa guia voc
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="./js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
