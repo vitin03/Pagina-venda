@@ -38,12 +38,9 @@ $(document).ready(function () {
 
     //Exibir DropDownToLeft ao clicar na classe
     $(document).on('click', '.botaoDropDownToLeft', function () {
-        dropDownX($(this).parent().find('.conteudo'), true, true);
-    })
-
-    //Ocultar DropDownToLeft ao sair da area
-    $(document).on('mouseleave', '.dropDownToLeft', function () {
-        dropDownX($(this).find('.conteudo'), false, true);
+        let este = $(this);
+        (este.hasClass('ativado'))? dropDownX(este.parent().find('.conteudo'), false, true) : dropDownX(este.parent().find('.conteudo'), true, true)
+        este.toggleClass('ativado');
     })
 
     //Abrir whatsapp ao clicar no botão

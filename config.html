@@ -274,18 +274,77 @@
                 right: 100%;
             }
         }
+
+        .div_item_config {
+            display: flex;
+            flex-direction: column;
+            align-items: end;
+            justify-content: center;
+        }
+
+        .main_item_config {
+            padding-left: auto;
+        }
+
+        .sub_item_config {
+            padding-left: 40px !important;
+        }
+
+        .main_item_config:hover {
+            background-color: #ededed;
+        }
+       
+        .sub_item_config:hover {
+            background-color: #eee;
+        }
+
+        .item_config {
+            cursor: pointer;
+            position: relative;
+            height: 40px !important;
+            width: 280px !important;
+            padding: 0 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .main_item_config:hover .arrow_icone span {
+            font-size: 30px !important;
+        }
     </style>
     <div class="w-100 bg-primary" style="min-height: 100vh;">
-        <div class="h-100 w-100 row m-0 bg-white">
-            <div class="col-2 p-0">
-                <div class="w-100 h-100 coluna_item_config"></div>
+        <div class="h-100 w-100 bg-white d-flex">
+            <div class="flex-grow-0 p-0">
+                <div class="w-100 h-100 coluna_item_config">
+                    <div class="div_item_config">
+                        <div class="main_item_config item_config">
+                            <div class="conteudo d-flex align-items-center">
+                                <span class="icone material-icons me-1">phone</span>
+                                <span class="texto">Redes sociais</span>
+                            </div>
+                            <div class="arrow_icone">
+                                <span class="material-icons">expand_more</span>
+                            </div>
+                        </div>
+                        <div class="sub_item_config item_config">
+                            <div class="conteudo d-flex align-items-center">
+                                <span class="icone material-icons me-1">phone</span>
+                                <span class="texto">Redes sociais</span>
+                            </div>
+                            <div class="arrow_icone">
+                                <span class="material-icons">expand_more</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-10 p-0">
-                <div class="coluna_config w-100 h-100 py-5" style="background-color: #e6e6e6;">
-                    <div class="container bg-white rounded p-3" style="min-height: 90vh;">
+            <div class="flex-grow-1 p-0">
+                <div class="coluna_config w-100 h-100 px-3 py-5" style="background-color: #e6e6e6;">
+                    <div class="bg-white container rounded p-3">
                         <div class="titulo d-flex align-items-center">
                             <span class="material-icons fs-2 me-2">settings</span>
-                            <h3 class="m-0">Pagina de Configurações do site</h3>
+                            <h3 class="m-0">Configurações do site</h3>
                         </div>
                         <hr>
                         <div class="conteudo">
