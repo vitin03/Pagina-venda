@@ -284,6 +284,7 @@
 
         .main_item_config {
             padding-left: auto;
+            background-color: white;
         }
 
         .sub_item_config {
@@ -309,32 +310,75 @@
             align-items: center;
         }
 
-        .main_item_config:hover .arrow_icone span {
+        .item_config:hover .arrow_icone .icone {
             font-size: 30px !important;
         }
+
+
+        .arrow_icone .icone{
+            transition: transform 0.2s;
+            transform: rotate(0deg) !important;
+        }
+
+        .arrow_icone .icone.active {
+            transition: transform 0.2s;
+            transform: rotate(180deg) !important;
+        }
+
+
+        .div_item_config .sub_item_config {
+            margin-top: -40px;
+            transition: margin-top 0.2s;
+        }
+
+        
+        .div_item_config .sub_item_config.active {
+            margin-top: 0px !important;
+            transition: margin-top 0.2s;
+        }
+
+        .div_item_config .main_item_config .conteudo .texto {
+            line-height: 17px !important;
+        }
+
     </style>
+
+
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '.item_config', function() {
+                let este = $(this);
+                let esteIcone = este.find('.arrow_icone').find('.icone');
+                esteIcone.toggleClass('active');
+            });
+
+            $(document).on('click', '.main_item_config', function() {
+                let este = $(this);
+                let esteSubItem = este.parent().find('.sub_item_config');
+                esteSubItem.toggleClass('active');
+            })
+        })
+    </script>
     <div class="w-100 bg-primary" style="min-height: 100vh;">
         <div class="h-100 w-100 bg-white d-flex">
             <div class="flex-grow-0 p-0">
                 <div class="w-100 h-100 coluna_item_config">
                     <div class="div_item_config">
-                        <div class="main_item_config item_config">
+                        <div class="main_item_config item_config" style="z-index: 1051;">
                             <div class="conteudo d-flex align-items-center">
                                 <span class="icone material-icons me-1">phone</span>
-                                <span class="texto">Redes sociais</span>
+                                <span class="texto">Redes sociais sociais sociais sociais</span>
                             </div>
                             <div class="arrow_icone">
-                                <span class="material-icons">expand_more</span>
+                                <span class="icone material-icons">expand_more</span>
                             </div>
                         </div>
-                        <div class="sub_item_config item_config">
+                        <div class="sub_item_config item_config" style="z-index: 1050;">
                             <div class="conteudo d-flex align-items-center">
                                 <span class="icone material-icons me-1">phone</span>
                                 <span class="texto">Redes sociais</span>
                             </div>
-                            <div class="arrow_icone">
-                                <span class="material-icons">expand_more</span>
-                            </div>
+                            <div class="arrow_icone"></div>
                         </div>
                     </div>
                 </div>
